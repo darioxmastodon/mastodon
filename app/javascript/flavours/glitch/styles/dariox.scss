@@ -1,0 +1,77 @@
+@import 'dariox/linernotes_dark.scss';
+
+.reply-indicator__display-name,
+.reply-indicator__header {
+    background-color: var(--bg);
+    color: var(--text);
+}
+
+.privacy-dropdown__option__content div span,
+.privacy-dropdown__option__content div {
+    color: white !important;
+}
+.autosuggest-textarea__textarea,
+.compose-form__autosuggest-wrapper,
+.compose-form .autosuggest-textarea label .autosuggest-textarea__textarea {
+    background-color: var(--bgPage);
+    border-radius: 4px 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid var(--bg);
+    color: var(--text);
+}
+.compose-panel .compose-form__autosuggest-wrapper {
+    background-color: transparent;
+}
+.autosuggest-textarea span,
+.display-name,
+.privacy-dropdown__option .privacy-dropdown__option__content,
+.privacy-dropdown__option .privacy-dropdown__option__content strong {
+    color: var(--text);
+}
+
+.status {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.drawer__inner__mastodon img {
+    max-height: 180px !important;
+}
+.simple_form .glitch_only {
+    color: #ff8d8d;
+    background-color: rgba(255,141,141,.1);
+    border-color: rgba(255,141,141,.5);
+}
+.account-role,
+.simple_form .glitch_only,
+.not_recommended,
+.simple_form .recommended
+{
+    display: inline-block;
+    padding: 4px 6px;
+    cursor: default;
+    border-radius: 3px;
+    font-size: 12px;
+    line-height: 12px;
+    font-weight: 500;
+    color: var(--user-role-accent, #d9e1e8);
+    background-color:  var(--user-role-background, rgba(217,225,232,.1));
+    border: 1px solid var(--user-role-border,
+    rgba(217,225,232,.5));
+}
+
+.admin-wrapper .content h4
+{
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--accentText);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--accent);
+    background-color: transparent;
+}
+.simple_form h4 {
+    margin-bottom: 14px !important;
+    background-color: transparent;
+}

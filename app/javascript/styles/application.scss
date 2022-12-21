@@ -23,3 +23,7 @@
 @import 'mastodon/dashboard';
 @import 'mastodon/rtl';
 @import 'mastodon/accessibility';
+
+.drawer__inner__mastodon img {
+    max-height: 180px !important;
+}
