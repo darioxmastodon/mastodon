@@ -30,6 +30,7 @@
     color: var(--text);
 }
 
+.detailed-status__wrapper,
 .status {
     margin-left: 0;
     margin-right: 0;
@@ -74,4 +75,8 @@
 .simple_form h4 {
     margin-bottom: 14px !important;
     background-color: transparent;
+}
+
+.column-header__back-button {
+    background: transparent;
 }
