@@ -31,10 +31,10 @@ if Rails.env.production?
     p.base_uri        :none
     p.default_src     :none
     p.frame_ancestors :none
-    p.script_src      :self, "'unsafe-eval'", assets_host, "'wasm-unsafe-eval'"
+    p.script_src      :self, :unsafe_inline, "'unsafe-eval'", assets_host, "'wasm-unsafe-eval'"
     p.font_src        :self, :data, :blob, assets_host, "'fonts.googleapis.com'", "'nts.gstatic.com'"
     p.img_src         :self, :data, :blob, *data_hosts
-    p.style_src       "'unsafe-inline'", "data:", "'unsafe-eval'", "'self'", assets_host, "'*.googleapis.com'", "'*.gstatic.com'"
+    p.style_src       :self, :data, :blob, :unsafe_inline, assets_host
     p.media_src       :self, :data, *data_hosts
     p.frame_src       :self, :https
     p.child_src       :self, :blob, assets_host
