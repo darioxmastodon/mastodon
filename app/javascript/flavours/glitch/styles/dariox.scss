@@ -15,6 +15,10 @@ $textHead: $textBold;
 $accent: rgb(214,41,130);
 $accentText: $textBold;
 
+.pillbar-button:not([disabled]).active {
+    background-color: $bgHead;
+}
+
 .reply-indicator {
     &__display-name,
     &__header {
