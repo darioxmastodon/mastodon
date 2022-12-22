@@ -1,6 +1,7 @@
-#  Mastodon Glitch Edition  #
+#  Mastodon Glitch+DARiOX Edition  #
+[mastodon](https://github.com/mastodon/mastodon)->[glitch-soc](https://github.com/glitch-soc/mastodon)->[dariox](https://github.com/darioxmastodon/mastodon)
 
->   Now with automated deploys!
+## Original README
 
 [![Build Status](https://img.shields.io/circleci/project/github/glitch-soc/mastodon.svg)][circleci]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/glitch-soc/mastodon.svg)][code_climate]
