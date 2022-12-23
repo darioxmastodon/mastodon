@@ -80,6 +80,8 @@ class LinkFooter extends React.PureComponent {
           )}
           {DividingCircle}
           <Link to='/privacy-policy'><FormattedMessage id='footer.privacy_policy' defaultMessage='Privacy policy' /></Link>
+          {DividingCircle}
+          <a key='documentation' target='_blank' rel='noopener noreferrer' href='https://docs.dariox.club/'>Docs</a>
         </p>
 
         <p>
