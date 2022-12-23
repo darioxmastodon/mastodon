@@ -26,6 +26,7 @@ $accentText: $textBold;
         color: $text;
     }
 }
+.status.focusable:focus,
 .status.statuc-public.focusable:focus {
     background: $bg;
 }
@@ -178,23 +179,27 @@ $accentText: $textBold;
         background-color: $accent;
     }
 }
-.admin-wrapper .content {
-    &__heading {
-        &__tabs {
-            a {
-                color: $textMuted;
-            }
-            a:hover {
-                color: $bg;
+.admin-wrapper {
+    .content {
+        &__heading {
+            &__tabs {
+                a {
+                    color: $textMuted;
+                }
+                a:hover {
+                    color: $bg;
+                }
+                a:hover:not(.selected) {
+                    color: $text;
+                }
+                a:focus,
+                a.selected,
+                a.selected:focus {
+                    background: $accent;
+                }
             }
         }
     }
-}
-.admin-wrapper .content__heading__tabs a {
-    color: $textMuted;
-}
-.admin-wrapper .content__heading__tabs a:hover {
-    background: $bg;
 }
 .selected.simple-navigation-active-leaf,
 .admin-wrapper .content__heading__tabs a.selected {
