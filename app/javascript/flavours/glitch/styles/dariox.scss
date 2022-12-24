@@ -18,7 +18,9 @@ $accentText: $textBold;
 .pillbar-button:not([disabled]).active {
     background-color: $bgHead;
 }
-
+#new_user .lead {
+    background: transparent;
+}
 .reply-indicator {
     &__display-name,
     &__header {
