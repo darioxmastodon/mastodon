@@ -1,19 +1,14 @@
 @use 'sass:math';
+@import 'dariox/vars.scss';
 @import 'dariox/linernotes_dark.scss';
-$bg: rgb(26,21,21);
-$text: rgb(255,255,255);
-$textBold: rgb(255,255,255);
-$textMuted: rgb(153,157,156);
+@import 'dariox/vars.scss';
+@import 'dariox/account.scss';
+@import 'dariox/status.scss';
+@import 'dariox/compose.scss';
 
-$bgPage: rgb(42,38,37);
-$textPage: $text;
-$textPageBold: $textBold;
-$textPageMuted: $textMuted;
-
-$bgHead: rgb(94,28,148);
-$textHead: $textBold;
-$accent: rgb(214,41,130);
-$accentText: $textBold;
+body.app-body {
+    background-color: $bg;
+}
 
 .pillbar-button:not([disabled]).active {
     background-color: $bgHead;
@@ -28,20 +23,37 @@ $accentText: $textBold;
         color: $text;
     }
 }
-.status.focusable:focus,
-.status.statuc-public.focusable:focus {
+.conversation,
+.follow_requests-unlocked_explanation {
     background: $bg;
 }
-.privacy-dropdown {
-    &__option {
-        &__content {
-            div,
-            div span {
-                color: $text !important;
-            }
-        }
+.card {
+    &__bar {
+        background: $bg !important;
     }
 }
+.dashboard__counters > div > a {
+    background: $bg !important;
+}
+.table td {
+    background: rgba($bg, .8);
+}
+.table > tbody > tr:nth-child(2n+1) > td,
+.table.inline-table >tbody >tr:nth-child(2n+1) > td {
+    background: $bg !important;
+}
+
+.batch-table__row:hover {
+    background: $bg !important;
+}
+.batch-table__row:nth-child(2n):hover {
+    background: $bg !important;
+}
+.notification__filter-bar a.active::after,
+.notification__filter-bar button.active::after {
+    border-bottom-color: $accent !important;
+}
+/* ======== Emoji */
 .emoji-mart-anchor-bar {
     display: none;
 }
@@ -56,29 +68,28 @@ $accentText: $textBold;
 .emoji-mart {
     border-radius: 4px !important;
 }
-.autosuggest-textarea__textarea,
-.compose-form__autosuggest-wrapper,
-.compose-form .autosuggest-textarea label .autosuggest-textarea__textarea {
-    background-color: $bgPage;
-    border-radius: 4px 4px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
-    border: 1px solid $bg;
-    color: $text;
+.emoji-mart-scroll,
+.emoji-mart-category-label span,
+.emoji-mart-search {
+    background: $bg !important;
 }
-.column-settings {
-    &__section {
-        background-color: transparent;
+.emoji-mart-search-icon svg {
+    fill: $text !important;
+}
+.emoji-mart-search-icon {
+    opacity: 1 !important;
+}
+/* ======== Form */
+.simple_form h4 {
+    margin-bottom: 14px !important;
+    background-color: transparent;
+}
+.column-header {
+    &__back-button {
+        background: transparent;
     }
-}
-.settings-toggle {
-    &__label {
-        background-color: transparent;
-    }
-}
-.compose-form {
-    &__autosuggest-wrapper{
-        background-color: transparent;
+    &__buttons:hover {
+        background-color: $accent;
     }
 }
 .column-inline-form {
@@ -86,46 +97,8 @@ $accentText: $textBold;
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
 }
-.column-inline-form label .settings-text {
-    border-bottom-color: $bgHead;
-}
-.settings-text:focus {
-    outline: 0;
-}
-.column-inline-form label .settings-text:focus
-{
-    border-color: $accent;
-}
-.privacy-dropdown {
-    &__option {
-        color: $text;
-        &__content {
-            color: $text;
-            strong {
-                color: $text;
-            }
-        }
-    }
-}
-.autosuggest-textarea span,
-.display-name {
-    color: $text;
-}
-.detailed-status {
-    &__wrapper {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
-.status {
-    margin-left: 0;
-    margin-right: 0;
-    &__prepend-icon-wrapper {
-        i {
-            color: $textMuted;
-        }
-    }
-}
+
+/* ======== Advanced Mode */
 .drawer {
     &__inner {
         &__mastodon {
@@ -136,11 +109,14 @@ $accentText: $textBold;
     }
 }
 
+/* ======== Badges */
+/* Glitch-only */
 .simple_form .glitch_only {
     color: #ff8d8d;
     background-color: rgba(255,141,141,.1);
     border-color: rgba(255,141,141,.5);
 }
+/* Account Role */
 .account-role,
 .simple_form .glitch_only,
 .not_recommended,
@@ -159,6 +135,7 @@ $accentText: $textBold;
     rgba(217,225,232,.5));
 }
 
+/* ======== Admin Panel */
 .admin-wrapper .content h4
 {
     text-transform: uppercase;
@@ -168,18 +145,6 @@ $accentText: $textBold;
     padding-bottom: 8px;
     border-bottom: 1px solid $accent;
     background-color: transparent;
-}
-.simple_form h4 {
-    margin-bottom: 14px !important;
-    background-color: transparent;
-}
-.column-header {
-    &__back-button {
-        background: transparent;
-    }
-    &__buttons:hover {
-        background-color: $accent;
-    }
 }
 .admin-wrapper {
     .content {
@@ -194,20 +159,29 @@ $accentText: $textBold;
                 a:hover:not(.selected) {
                     color: $text;
                 }
+                a.selected {
+                    background: $bgHead;
+                }
                 a:focus,
-                a.selected,
                 a.selected:focus {
                     background: $accent;
                 }
             }
         }
+        .directory {
+            &__tag {
+                > a:hover,
+                > div:hover {
+                    background: $bg;
+                    outline: 2px solid $accent;
+                }
+            }
+        }
     }
 }
-.selected.simple-navigation-active-leaf,
-.admin-wrapper .content__heading__tabs a.selected {
+.selected.simple-navigation-active-leaf {
     background: $bgHead;
 }
-.admin-wrapper .content__heading__tabs a.selected:focus
 .selected.simple-navigation-active-leaf:hover {
     background: $accent;
 }
@@ -264,10 +238,4 @@ a.sparkline {
             }
         }
     }
-}
-
-.admin-wrapper .content .directory__tag > a:hover,
-.admin-wrapper .content .directory__tag > div:hover {
-    background: $bg;
-    outline: 2px solid $accent;
 }
