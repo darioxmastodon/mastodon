@@ -1,0 +1,55 @@
+@import './vars.scss';
+.detailed-status {
+    &__wrapper {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+.detailed-status,
+.status {
+    background: $bg;
+    margin-left: 0;
+    margin-right: 0;
+    &__prepend-icon-wrapper {
+        i {
+            color: $textMuted;
+        }
+    }
+    .focusable:not(:focus) {
+        padding: 15px !important;
+    }
+    .focusable:focus {
+        padding: 13px !important;
+        background: $bg !important;
+    }
+
+    &__action-bar-button:hover,
+    &__action-bar-button:focus {
+        .icon-button:first-child:hover,
+        .icon-button:first-child:focus {
+            color: $accent !important;
+        }
+    }
+    :focus &__content,
+    .focusable:focus &__content,
+    :focus &__action-bar,
+    .focusable:focus &__action-bar {
+        background: transparent !important;
+    }
+    &__content,
+    &__action-bar,
+    .focusable:not(:focus) &__content,
+    .focusable:not(:focus) &__action-bar {
+        background: $bg !important;
+    }
+}
+.notification,
+.notification .account,
+.status.status-direct {
+    background: $bg !important;
+}
+.reply-indicator {
+    &__content {
+        background: $bg !important;
+    }
+}

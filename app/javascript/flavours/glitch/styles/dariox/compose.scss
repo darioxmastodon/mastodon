@@ -1,0 +1,89 @@
+@import './vars.scss';
+.autosuggest-textarea__textarea,
+.compose-form__autosuggest-wrapper,
+.compose-form .autosuggest-textarea label .autosuggest-textarea__textarea {
+    background-color: $bg;
+    border-radius: 4px 4px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom: 1px solid $bgPage;
+    color: $text;
+}
+.autosuggest-textarea span,
+.display-name {
+    color: $text;
+}
+.compose-form {
+    &__autosuggest-wrapper{
+        background-color: $bg !important;
+    }
+    &__buttons-wrapper {
+        background: $bg !important;
+    }
+}
+.spoiler-input {
+    &__input {
+        background: $bg !important;
+        color: $text !important;
+    }
+}
+.columns-area {
+    &__panels {
+        &__pane--navigational {
+            .navigation-panel {
+                background: $bg;
+            }
+        }
+    }
+}
+.column-link--transparent {
+    background: transparent !important;
+}
+.search {
+    &__input {
+        background-color: $bg;
+    }
+}
+.column-settings {
+    &__section {
+        background-color: transparent;
+    }
+}
+.settings-toggle {
+    &__label {
+        background-color: transparent;
+    }
+}
+.column-inline-form label .settings-text {
+    border-bottom-color: $bgHead;
+}
+.settings-text:focus {
+    outline: 0;
+}
+.column-inline-form label .settings-text:focus
+{
+    border-color: $accent;
+}
+.privacy-dropdown {
+    &__option {
+        color: $text !important;
+        &__content {
+            color: $text !important;
+            strong {
+                color: $text !important;
+            }
+            div,
+            div span {
+                color: $text !important;
+            }
+        }
+    }
+}
+.reply-indicator {
+    background: $bg !important;
+}
+.report-modal__comment .setting-text-label,
+.report-modal__comment .setting-text,
+.report-modal__comment .setting-text:focus {
+    color: $text !important;
+}

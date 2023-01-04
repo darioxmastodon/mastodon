@@ -1,0 +1,45 @@
+@import './vars.scss';
+.account {
+    &__section-headline {
+        a.active::after,
+        button.active::after {
+            border-bottom-color: $accent !important;
+        }
+    }
+    &__header {
+        &__bar,
+        &__content,
+        &__fields {
+            background-color: $bg !important;
+        }
+        &__fields {
+            border-bottom-color: $accent;
+            dd,
+            dt {
+                background: $bg !important;
+            }
+        }
+        &__bio,
+        &__joined {
+            color: $textMuted !important;
+        }
+    }
+    &__action-bar {
+        background: $bg !important;
+        border-top-color: $bgPage !important;
+        border-bottom-color: $bgPage !important;
+        &__tab {
+            .active {
+                border-bottom-color: $accent !important;
+            }
+        }
+    }
+    &__disclaimer {
+        background: $bg !important;
+    }
+}
+.account-authorize {
+    &__wrapper {
+        background: $bg;
+    }
+}
