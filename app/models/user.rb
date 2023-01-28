@@ -523,11 +523,11 @@ class User < ApplicationRecord
   end
 
   def notify_staff_about_pending_account!
+    TriggerWebhookWorker.perform_async('account.pending', 'Account', account_id)
     User.those_who_can(:manage_users).includes(:account).find_each do |u|
       next unless u.allows_pending_account_emails?
       AdminMailer.new_pending_account(u.account, self).deliver_later
     end
-    TriggerWebhookWorker.perform_async('account.pending', 'Account', account_id)
   end
 
   def regenerate_feed!
