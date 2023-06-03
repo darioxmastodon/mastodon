@@ -1,15 +1,17 @@
-import React from 'react';
-import IconButton from './icon_button';
 import PropTypes from 'prop-types';
+import { PureComponent } from 'react';
+
 import { injectIntl, defineMessages } from 'react-intl';
+
 import { bannerSettings } from 'mastodon/settings';
+
+import { IconButton } from './icon_button';
 
 const messages = defineMessages({
   dismiss: { id: 'dismissable_banner.dismiss', defaultMessage: 'Dismiss' },
 });
 
-export default @injectIntl
-class DismissableBanner extends React.PureComponent {
+class DismissableBanner extends PureComponent {
 
   static propTypes = {
     id: PropTypes.string.isRequired,
@@ -49,3 +51,5 @@ class DismissableBanner extends React.PureComponent {
   }
 
 }
+
+export default injectIntl(DismissableBanner);

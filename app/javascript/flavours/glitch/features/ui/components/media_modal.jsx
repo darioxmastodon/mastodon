@@ -1,19 +1,23 @@
-import React from 'react';
-import ReactSwipeableViews from 'react-swipeable-views';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import Video from 'flavours/glitch/features/video';
-import { connect } from 'react-redux';
-import classNames from 'classnames';
+
 import { defineMessages, injectIntl } from 'react-intl';
-import IconButton from 'flavours/glitch/components/icon_button';
+
+import classNames from 'classnames';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import ImageLoader from './image_loader';
-import Icon from 'flavours/glitch/components/icon';
-import GIFV from 'flavours/glitch/components/gifv';
-import Footer from 'flavours/glitch/features/picture_in_picture/components/footer';
+
+import ReactSwipeableViews from 'react-swipeable-views';
+
 import { getAverageFromBlurhash } from 'flavours/glitch/blurhash';
+import { GIFV } from 'flavours/glitch/components/gifv';
+import { Icon } from 'flavours/glitch/components/icon';
+import { IconButton } from 'flavours/glitch/components/icon_button';
+import Footer from 'flavours/glitch/features/picture_in_picture/components/footer';
+import Video from 'flavours/glitch/features/video';
 import { disableSwiping } from 'flavours/glitch/initial_state';
+
+import ImageLoader from './image_loader';
 
 const messages = defineMessages({
   close: { id: 'lightbox.close', defaultMessage: 'Close' },
@@ -21,12 +25,6 @@ const messages = defineMessages({
   next: { id: 'lightbox.next', defaultMessage: 'Next' },
 });
 
-const mapStateToProps = (state, { statusId }) => ({
-  language: state.getIn(['statuses', statusId, 'language']),
-});
-
-export default @connect(mapStateToProps, null, null, { forwardRef: true })
-@injectIntl
 class MediaModal extends ImmutablePureComponent {
 
   static contextTypes = {
@@ -36,6 +34,7 @@ class MediaModal extends ImmutablePureComponent {
   static propTypes = {
     media: ImmutablePropTypes.list.isRequired,
     statusId: PropTypes.string,
+    lang: PropTypes.string,
     index: PropTypes.number.isRequired,
     onClose: PropTypes.func.isRequired,
     intl: PropTypes.object.isRequired,
@@ -137,13 +136,13 @@ class MediaModal extends ImmutablePureComponent {
   }
 
   render () {
-    const { media, language, statusId, intl, onClose } = this.props;
+    const { media, statusId, lang, intl, onClose } = this.props;
     const { navigationHidden } = this.state;
 
     const index = this.getIndex();
 
-    const leftNav  = media.size > 1 && <button tabIndex='0' className='media-modal__nav media-modal__nav--left' onClick={this.handlePrevClick} aria-label={intl.formatMessage(messages.previous)}><Icon id='chevron-left' fixedWidth /></button>;
-    const rightNav = media.size > 1 && <button tabIndex='0' className='media-modal__nav  media-modal__nav--right' onClick={this.handleNextClick} aria-label={intl.formatMessage(messages.next)}><Icon id='chevron-right' fixedWidth /></button>;
+    const leftNav  = media.size > 1 && <button tabIndex={0} className='media-modal__nav media-modal__nav--left' onClick={this.handlePrevClick} aria-label={intl.formatMessage(messages.previous)}><Icon id='chevron-left' fixedWidth /></button>;
+    const rightNav = media.size > 1 && <button tabIndex={0} className='media-modal__nav  media-modal__nav--right' onClick={this.handleNextClick} aria-label={intl.formatMessage(messages.next)}><Icon id='chevron-right' fixedWidth /></button>;
 
     const content = media.map((image) => {
       const width  = image.getIn(['meta', 'original', 'width']) || null;
@@ -157,7 +156,7 @@ class MediaModal extends ImmutablePureComponent {
             width={width}
             height={height}
             alt={image.get('description')}
-            lang={language}
+            lang={lang}
             key={image.get('url')}
             onClick={this.toggleNavigation}
             zoomButtonHidden={this.state.zoomButtonHidden}
@@ -180,7 +179,7 @@ class MediaModal extends ImmutablePureComponent {
             onCloseVideo={onClose}
             detailed
             alt={image.get('description')}
-            lang={language}
+            lang={lang}
             key={image.get('url')}
           />
         );
@@ -190,9 +189,9 @@ class MediaModal extends ImmutablePureComponent {
             src={image.get('url')}
             width={width}
             height={height}
-            key={image.get('preview_url')}
+            key={image.get('url')}
             alt={image.get('description')}
-            lang={language}
+            lang={lang}
             onClick={this.toggleNavigation}
           />
         );
@@ -259,3 +258,5 @@ class MediaModal extends ImmutablePureComponent {
   }
 
 }
+
+export default injectIntl(MediaModal);

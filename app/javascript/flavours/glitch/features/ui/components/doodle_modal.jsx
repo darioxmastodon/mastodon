@@ -1,15 +1,17 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import Button from 'flavours/glitch/components/button';
-import ImmutablePureComponent from 'react-immutable-pure-component';
-import Atrament from 'atrament'; // the doodling library
-import { connect } from 'react-redux';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { doodleSet, uploadCompose } from 'flavours/glitch/actions/compose';
-import IconButton from 'flavours/glitch/components/icon_button';
-import { debounce, mapValues } from 'lodash';
+
 import classNames from 'classnames';
 
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePureComponent from 'react-immutable-pure-component';
+import { connect } from 'react-redux';
+
+import Atrament from 'atrament'; // the doodling library
+import { debounce, mapValues } from 'lodash';
+
+import { doodleSet, uploadCompose } from 'flavours/glitch/actions/compose';
+import Button from 'flavours/glitch/components/button';
+import { IconButton } from 'flavours/glitch/components/icon_button';
 // palette nicked from MyPaint, CC0
 const palette = [
   ['rgb(  0,    0,    0)', 'Black'],
@@ -125,9 +127,15 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  /** Set options in the redux store */
+  /**
+   * Set options in the redux store
+   * @param opts
+   */
   setOpt: (opts) => dispatch(doodleSet(opts)),
-  /** Submit doodle for upload */
+  /**
+   * Submit doodle for upload
+   * @param file
+   */
   submit: (file) => dispatch(uploadCompose([file])),
 });
 
@@ -145,7 +153,6 @@ const mapDispatchToProps = dispatch => ({
  * - Ctrl + left mouse button: pick background
  * - Right mouse button: pick background
  */
-export default @connect(mapStateToProps, mapDispatchToProps)
 class DoodleModal extends ImmutablePureComponent {
 
   static propTypes = {
@@ -231,7 +238,10 @@ class DoodleModal extends ImmutablePureComponent {
 
   //endregion
 
-  /** Key up handler */
+  /**
+   * Key up handler
+   * @param e
+   */
   handleKeyUp = (e) => {
     if (e.target.nodeName === 'INPUT') return;
 
@@ -257,7 +267,10 @@ class DoodleModal extends ImmutablePureComponent {
     }
   };
 
-  /** Key down handler */
+  /**
+   * Key down handler
+   * @param e
+   */
   handleKeyDown = (e) => {
     if (e.key === 'Control' || e.key === 'Meta') {
       this.controlHeld = true;
@@ -293,7 +306,6 @@ class DoodleModal extends ImmutablePureComponent {
   /**
    * Set reference to the canvas element.
    * This is called during component init
-   *
    * @param elem - canvas element
    */
   setCanvasRef = (elem) => {
@@ -335,7 +347,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Set up the sketcher instance
-   *
    * @param canvas - canvas element. Null if we're just resizing
    */
   initSketcher (canvas = null) {
@@ -434,7 +445,6 @@ class DoodleModal extends ImmutablePureComponent {
   /**
    * Palette left click.
    * Selects Fg color (or Bg, if Control/Meta is held)
-   *
    * @param e - event
    */
   onPaletteClick = (e) => {
@@ -453,7 +463,6 @@ class DoodleModal extends ImmutablePureComponent {
   /**
    * Palette right click.
    * Selects Bg color
-   *
    * @param e - event
    */
   onPaletteRClick = (e) => {
@@ -464,7 +473,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Handle click on the Draw mode button
-   *
    * @param e - event
    */
   setModeDraw = (e) => {
@@ -474,7 +482,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Handle click on the Fill mode button
-   *
    * @param e - event
    */
   setModeFill = (e) => {
@@ -484,7 +491,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Handle click on Smooth checkbox
-   *
    * @param e - event
    */
   tglSmooth = (e) => {
@@ -494,7 +500,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Handle click on Adaptive checkbox
-   *
    * @param e - event
    */
   tglAdaptive = (e) => {
@@ -504,7 +509,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Handle change of the Weight input field
-   *
    * @param e - event
    */
   setWeight = (e) => {
@@ -513,7 +517,6 @@ class DoodleModal extends ImmutablePureComponent {
 
   /**
    * Set size - clalback from the select box
-   *
    * @param e - event
    */
   changeSize = (e) => {
@@ -612,3 +615,5 @@ class DoodleModal extends ImmutablePureComponent {
   }
 
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(DoodleModal);

@@ -2,6 +2,9 @@
 [mastodon](https://github.com/mastodon/mastodon)->[glitch-soc](https://github.com/glitch-soc/mastodon)->[dariox](https://github.com/darioxmastodon/mastodon)
 
 ## Original README
+# Mastodon Glitch Edition
+
+> Now with automated deploys!
 
 [![Build Status](https://img.shields.io/circleci/project/github/glitch-soc/mastodon.svg)][circleci]
 [![Code Climate](https://img.shields.io/codeclimate/maintainability/glitch-soc/mastodon.svg)][code_climate]

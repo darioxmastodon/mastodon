@@ -1,15 +1,21 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+
+import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+
+import classNames from 'classnames';
+
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
-import classNames from 'classnames';
-import Motion from 'flavours/glitch/features/ui/util/optional_motion';
-import spring from 'react-motion/lib/spring';
+
 import escapeTextContentForBrowser from 'escape-html';
+import spring from 'react-motion/lib/spring';
+
+import { Icon } from 'flavours/glitch/components/icon';
 import emojify from 'flavours/glitch/features/emoji/emoji';
-import RelativeTimestamp from './relative_timestamp';
-import Icon from 'flavours/glitch/components/icon';
+import Motion from 'flavours/glitch/features/ui/util/optional_motion';
+
+import { RelativeTimestamp } from './relative_timestamp';
+
 
 const messages = defineMessages({
   closed: {
@@ -31,7 +37,6 @@ const makeEmojiMap = record => record.get('emojis').reduce((obj, emoji) => {
   return obj;
 }, {});
 
-export default @injectIntl
 class Poll extends ImmutablePureComponent {
 
   static contextTypes = {
@@ -155,7 +160,7 @@ class Poll extends ImmutablePureComponent {
           {!showResults && (
             <span
               className={classNames('poll__input', { checkbox: poll.get('multiple'), active })}
-              tabIndex='0'
+              tabIndex={0}
               role={poll.get('multiple') ? 'checkbox' : 'radio'}
               onKeyPress={this.handleOptionKeyPress}
               aria-checked={active}
@@ -234,3 +239,5 @@ class Poll extends ImmutablePureComponent {
   }
 
 }
+
+export default injectIntl(Poll);

@@ -1,12 +1,15 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { PureComponent } from 'react';
+
 import { injectIntl, FormattedMessage } from 'react-intl';
-import { makeGetAccount } from '../../../selectors';
-import Button from '../../../components/button';
-import { closeModal } from '../../../actions/modal';
+
+import { connect } from 'react-redux';
+
 import { blockAccount } from '../../../actions/accounts';
+import { closeModal } from '../../../actions/modal';
 import { initReport } from '../../../actions/reports';
+import Button from '../../../components/button';
+import { makeGetAccount } from '../../../selectors';
 
 
 const makeMapStateToProps = () => {
@@ -31,14 +34,15 @@ const mapDispatchToProps = dispatch => {
     },
 
     onClose() {
-      dispatch(closeModal());
+      dispatch(closeModal({
+        modalType: undefined,
+        ignoreFocus: false,
+      }));
     },
   };
 };
 
-export default @connect(makeMapStateToProps, mapDispatchToProps)
-@injectIntl
-class BlockModal extends React.PureComponent {
+class BlockModal extends PureComponent {
 
   static propTypes = {
     account: PropTypes.object.isRequired,
@@ -101,3 +105,5 @@ class BlockModal extends React.PureComponent {
   }
 
 }
+
+export default connect(makeMapStateToProps, mapDispatchToProps)(injectIntl(BlockModal));

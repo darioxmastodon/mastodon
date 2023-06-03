@@ -1,14 +1,15 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import ColumnHeader from '../../../components/column_header';
+import { PureComponent } from 'react';
+
 import { injectIntl, defineMessages } from 'react-intl';
+
+import ColumnHeader from '../../../components/column_header';
 
 const messages = defineMessages({
   profile: { id: 'column_header.profile', defaultMessage: 'Profile' },
 });
 
-export default @injectIntl
-class ProfileColumnHeader extends React.PureComponent {
+class ProfileColumnHeader extends PureComponent {
 
   static propTypes = {
     onClick: PropTypes.func,
@@ -31,3 +32,5 @@ class ProfileColumnHeader extends React.PureComponent {
   }
 
 }
+
+export default injectIntl(ProfileColumnHeader);

@@ -1,13 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import ImmutablePureComponent from 'react-immutable-pure-component';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import IconButton from 'flavours/glitch/components/icon_button';
-import { Link } from 'react-router-dom';
-import Avatar from 'flavours/glitch/components/avatar';
-import DisplayName from 'flavours/glitch/components/display_name';
+
 import { defineMessages, injectIntl } from 'react-intl';
+
+import { Link } from 'react-router-dom';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePureComponent from 'react-immutable-pure-component';
+import { connect } from 'react-redux';
+
+import { Avatar } from 'flavours/glitch/components/avatar';
+import { DisplayName } from 'flavours/glitch/components/display_name';
+import { IconButton } from 'flavours/glitch/components/icon_button';
+
+
 
 const messages = defineMessages({
   close: { id: 'lightbox.close', defaultMessage: 'Close' },
@@ -17,8 +22,6 @@ const mapStateToProps = (state, { accountId }) => ({
   account: state.getIn(['accounts', accountId]),
 });
 
-export default @connect(mapStateToProps)
-@injectIntl
 class Header extends ImmutablePureComponent {
 
   static propTypes = {
@@ -45,3 +48,5 @@ class Header extends ImmutablePureComponent {
   }
 
 }
+
+export default connect(mapStateToProps)(injectIntl(Header));

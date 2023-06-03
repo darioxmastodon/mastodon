@@ -1,8 +1,12 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
+import { PureComponent } from 'react';
+
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
+
 import SettingToggle from 'flavours/glitch/features/notifications/components/setting_toggle';
+
 import SettingText from '../../../components/setting_text';
 
 const messages = defineMessages({
@@ -10,8 +14,7 @@ const messages = defineMessages({
   settings: { id: 'home.settings', defaultMessage: 'Column settings' },
 });
 
-export default @injectIntl
-class ColumnSettings extends React.PureComponent {
+class ColumnSettings extends PureComponent {
 
   static propTypes = {
     settings: ImmutablePropTypes.map.isRequired,
@@ -40,3 +43,5 @@ class ColumnSettings extends React.PureComponent {
   }
 
 }
+
+export default injectIntl(ColumnSettings);

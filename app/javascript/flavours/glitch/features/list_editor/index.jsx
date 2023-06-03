@@ -1,15 +1,21 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import ImmutablePropTypes from 'react-immutable-proptypes';
-import { connect } from 'react-redux';
-import ImmutablePureComponent from 'react-immutable-pure-component';
+
 import { injectIntl } from 'react-intl';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
+import ImmutablePureComponent from 'react-immutable-pure-component';
+import { connect } from 'react-redux';
+
+import spring from 'react-motion/lib/spring';
+
 import { setupListEditor, clearListSuggestions, resetListEditor } from 'flavours/glitch/actions/lists';
+
+import Motion from '../ui/util/optional_motion';
+
+import EditListForm from './components/edit_list_form';
 import AccountContainer from './containers/account_container';
 import SearchContainer from './containers/search_container';
-import EditListForm from './components/edit_list_form';
-import Motion from '../ui/util/optional_motion';
-import spring from 'react-motion/lib/spring';
+
 
 const mapStateToProps = state => ({
   accountIds: state.getIn(['listEditor', 'accounts', 'items']),
@@ -22,8 +28,6 @@ const mapDispatchToProps = dispatch => ({
   onReset: () => dispatch(resetListEditor()),
 });
 
-export default @connect(mapStateToProps, mapDispatchToProps)
-@injectIntl
 class ListEditor extends ImmutablePureComponent {
 
   static propTypes = {
@@ -62,7 +66,7 @@ class ListEditor extends ImmutablePureComponent {
             {accountIds.map(accountId => <AccountContainer key={accountId} accountId={accountId} added />)}
           </div>
 
-          {showSearch && <div role='button' tabIndex='-1' className='drawer__backdrop' onClick={onClear} />}
+          {showSearch && <div role='button' tabIndex={-1} className='drawer__backdrop' onClick={onClear} />}
 
           <Motion defaultStyle={{ x: -100 }} style={{ x: spring(showSearch ? 0 : -100, { stiffness: 210, damping: 20 }) }}>
             {({ x }) =>
@@ -77,3 +81,5 @@ class ListEditor extends ImmutablePureComponent {
   }
 
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(injectIntl(ListEditor));

@@ -1,16 +1,18 @@
-import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
+
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
-import Icon from 'flavours/glitch/components/icon';
+
 import Textarea from 'react-textarea-autosize';
+
+import { Icon } from 'flavours/glitch/components/icon';
 
 const messages = defineMessages({
   placeholder: { id: 'account_note.glitch_placeholder', defaultMessage: 'No comment provided' },
 });
 
-export default @injectIntl
 class Header extends ImmutablePureComponent {
 
   static propTypes = {
@@ -54,11 +56,11 @@ class Header extends ImmutablePureComponent {
     if (isEditing) {
       action_buttons = (
         <div className='account__header__account-note__buttons'>
-          <button className='icon-button' tabIndex='0' onClick={this.props.onCancelAccountNote} disabled={isSubmitting}>
+          <button className='icon-button' tabIndex={0} onClick={this.props.onCancelAccountNote} disabled={isSubmitting}>
             <Icon id='times' size={15} /> <FormattedMessage id='account_note.cancel' defaultMessage='Cancel' />
           </button>
           <div className='flex-spacer' />
-          <button className='icon-button' tabIndex='0' onClick={this.props.onSaveAccountNote} disabled={isSubmitting}>
+          <button className='icon-button' tabIndex={0} onClick={this.props.onSaveAccountNote} disabled={isSubmitting}>
             <Icon id='check' size={15} /> <FormattedMessage id='account_note.save' defaultMessage='Save' />
           </button>
         </div>
@@ -66,7 +68,7 @@ class Header extends ImmutablePureComponent {
     } else {
       action_buttons = (
         <div className='account__header__account-note__buttons'>
-          <button className='icon-button' tabIndex='0' onClick={this.props.onEditAccountNote} disabled={isSubmitting}>
+          <button className='icon-button' tabIndex={0} onClick={this.props.onEditAccountNote} disabled={isSubmitting}>
             <Icon id='pencil' size={15} /> <FormattedMessage id='account_note.edit' defaultMessage='Edit' />
           </button>
         </div>
@@ -102,3 +104,5 @@ class Header extends ImmutablePureComponent {
   }
 
 }
+
+export default injectIntl(Header);

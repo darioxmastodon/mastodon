@@ -1,9 +1,10 @@
-import React from 'react';
-import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
-import Audio from 'mastodon/features/audio';
-import { connect } from 'react-redux';
+
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import ImmutablePureComponent from 'react-immutable-pure-component';
+import { connect } from 'react-redux';
+
+import Audio from 'mastodon/features/audio';
 import Footer from 'mastodon/features/picture_in_picture/components/footer';
 
 const mapStateToProps = (state, { statusId }) => ({
@@ -11,7 +12,6 @@ const mapStateToProps = (state, { statusId }) => ({
   accountStaticAvatar: state.getIn(['accounts', state.getIn(['statuses', statusId, 'account']), 'avatar_static']),
 });
 
-export default @connect(mapStateToProps, null, null, { forwardRef: true })
 class AudioModal extends ImmutablePureComponent {
 
   static propTypes = {
@@ -55,3 +55,5 @@ class AudioModal extends ImmutablePureComponent {
   }
 
 }
+
+export default connect(mapStateToProps, null, null, { forwardRef: true })(AudioModal);

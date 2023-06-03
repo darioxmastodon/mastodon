@@ -1,15 +1,18 @@
-import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import SearchContainer from 'flavours/glitch/features/compose/containers/search_container';
+import { PureComponent } from 'react';
+
+import { connect } from 'react-redux';
+
+import { mountCompose, unmountCompose } from 'flavours/glitch/actions/compose';
+import ServerBanner from 'flavours/glitch/components/server_banner';
 import ComposeFormContainer from 'flavours/glitch/features/compose/containers/compose_form_container';
 import NavigationContainer from 'flavours/glitch/features/compose/containers/navigation_container';
-import LinkFooter from './link_footer';
-import ServerBanner from 'flavours/glitch/components/server_banner';
-import { mountCompose, unmountCompose } from 'flavours/glitch/actions/compose';
+import SearchContainer from 'flavours/glitch/features/compose/containers/search_container';
 
-export default @connect()
-class ComposePanel extends React.PureComponent {
+import LinkFooter from './link_footer';
+
+
+class ComposePanel extends PureComponent {
 
   static contextTypes = {
     identity: PropTypes.object.isRequired,
@@ -37,17 +40,17 @@ class ComposePanel extends React.PureComponent {
         <SearchContainer openInRoute />
 
         {!signedIn && (
-          <React.Fragment>
+          <>
             <ServerBanner />
             <div className='flex-spacer' />
-          </React.Fragment>
+          </>
         )}
 
         {signedIn && (
-          <React.Fragment>
+          <>
             <NavigationContainer />
             <ComposeFormContainer singleColumn />
-          </React.Fragment>
+          </>
         )}
 
         <LinkFooter />
@@ -56,3 +59,5 @@ class ComposePanel extends React.PureComponent {
   }
 
 }
+
+export default connect()(ComposePanel);

@@ -1,8 +1,9 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import Icon from 'flavours/glitch/components/icon';
+
 import classNames from 'classnames';
+import { NavLink } from 'react-router-dom';
+
+import { Icon } from 'flavours/glitch/components/icon';
 
 const ColumnLink = ({ icon, text, to, onClick, href, method, badge, transparent, ...other }) => {
   const className = classNames('column-link', { 'column-link--transparent': transparent });
@@ -32,7 +33,8 @@ const ColumnLink = ({ icon, text, to, onClick, href, method, badge, transparent,
       return onClick(e);
     };
     return (
-      <a href='#' onClick={onClick && handleOnClick} className={className} title={text} {...other} tabIndex='0'>
+      // eslint-disable-next-line jsx-a11y/anchor-is-valid -- intentional to have the same look and feel as other menu items
+      <a href='#' onClick={onClick && handleOnClick} className={className} title={text} {...other} tabIndex={0}>
         {iconElement}
         <span>{text}</span>
         {badgeElement}

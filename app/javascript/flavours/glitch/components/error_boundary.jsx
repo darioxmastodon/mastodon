@@ -1,12 +1,16 @@
-import React from 'react';
 import PropTypes from 'prop-types';
+import { PureComponent } from 'react';
+
 import { FormattedMessage } from 'react-intl';
-import { source_url } from 'flavours/glitch/initial_state';
-import { preferencesLink } from 'flavours/glitch/utils/backend_links';
-import StackTrace from 'stacktrace-js';
+
 import { Helmet } from 'react-helmet';
 
-export default class ErrorBoundary extends React.PureComponent {
+import StackTrace from 'stacktrace-js';
+
+import { source_url } from 'flavours/glitch/initial_state';
+import { preferencesLink } from 'flavours/glitch/utils/backend_links';
+
+export default class ErrorBoundary extends PureComponent {
 
   static propTypes = {
     children: PropTypes.node,
@@ -72,7 +76,7 @@ export default class ErrorBoundary extends React.PureComponent {
     }
 
     return (
-      <div tabIndex='-1'>
+      <div tabIndex={-1}>
         <div className='error-boundary'>
           <h1><FormattedMessage id='web_app_crash.title' defaultMessage="We're sorry, but something went wrong with the Mastodon app." /></h1>
           <p>
