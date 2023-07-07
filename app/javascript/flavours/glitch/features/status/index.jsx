@@ -46,7 +46,7 @@ import {
   undoStatusTranslation,
 } from 'flavours/glitch/actions/statuses';
 import { Icon } from 'flavours/glitch/components/icon';
-import LoadingIndicator from 'flavours/glitch/components/loading_indicator';
+import { LoadingIndicator } from 'flavours/glitch/components/loading_indicator';
 import { textForScreenReader, defaultMediaVisibility } from 'flavours/glitch/components/status';
 import ScrollContainer from 'flavours/glitch/containers/scroll_container';
 import StatusContainer from 'flavours/glitch/containers/status_container';
@@ -66,7 +66,7 @@ const messages = defineMessages({
   deleteConfirm: { id: 'confirmations.delete.confirm', defaultMessage: 'Delete' },
   deleteMessage: { id: 'confirmations.delete.message', defaultMessage: 'Are you sure you want to delete this status?' },
   redraftConfirm: { id: 'confirmations.redraft.confirm', defaultMessage: 'Delete & redraft' },
-  redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this status and re-draft it? You will lose all replies, boosts and favourites to it.' },
+  redraftMessage: { id: 'confirmations.redraft.message', defaultMessage: 'Are you sure you want to delete this status and re-draft it? Favourites and boosts will be lost, and replies to the original post will be orphaned.' },
   revealAll: { id: 'status.show_more_all', defaultMessage: 'Show more for all' },
   hideAll: { id: 'status.show_less_all', defaultMessage: 'Show less for all' },
   statusTitleWithAttachments: { id: 'status.title.with_attachments', defaultMessage: '{user} posted {attachmentCount, plural, one {an attachment} other {# attachments}}' },
@@ -161,8 +161,9 @@ const makeMapStateToProps = () => {
 };
 
 const truncate = (str, num) => {
-  if (str.length > num) {
-    return str.slice(0, num) + '…';
+  const arr = Array.from(str);
+  if (arr.length > num) {
+    return arr.slice(0, num).join('') + '…';
   } else {
     return str;
   }
@@ -480,7 +481,7 @@ class Status extends ImmutablePureComponent {
     const { dispatch } = this.props;
 
     if (status.get('translation')) {
-      dispatch(undoStatusTranslation(status.get('id')));
+      dispatch(undoStatusTranslation(status.get('id'), status.get('poll')));
     } else {
       dispatch(translateStatus(status.get('id')));
     }
@@ -753,6 +754,7 @@ class Status extends ImmutablePureComponent {
         <Helmet>
           <title>{titleFromStatus(intl, status)}</title>
           <meta name='robots' content={(isLocal && isIndexable) ? 'all' : 'noindex'} />
+          <link rel='canonical' href={status.get('url')} />
         </Helmet>
       </Column>
     );
