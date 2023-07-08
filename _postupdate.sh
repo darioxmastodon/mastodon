@@ -1,7 +1,10 @@
 #!/bin/bash
 echo ""
 echo "================ Migrating Database"
-docker-compose run --rm web bundle exec rake db:migrate
+RAILS_ENV=production SKIP_POST_DEPLOYMENT_MIGRATIONS=true docker-compose run --rm web bundle exec rake db:migrate
 echo ""
 echo "================ Precompiling Assets"
-docker-compose run --rm web bundle exec rake assets:precompile
+RAILS_ENV=production docker-compose run --rm web bundle exec rake assets:precompile
+echo ""
+echo "================ Post-Migration Database"
+RAILS_ENV=production docker-compose run --rm web bundle exec rails db:migrate
