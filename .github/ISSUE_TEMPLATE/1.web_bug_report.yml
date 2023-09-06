@@ -1,3 +1,4 @@
+
 name: Bug Report (Web Interface)
 description: If you are using Mastodon's web interface and something is not working as expected
 labels: [bug, 'status/to triage', 'area/web interface']
