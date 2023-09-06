@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   download-translations:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-hydra
 
     steps:
       - name: Checkout

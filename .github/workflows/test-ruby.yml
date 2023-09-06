@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-hydra
 
     strategy:
       fail-fast: true
@@ -68,7 +68,7 @@ jobs:
           retention-days: 0
 
   test:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-hydra
 
     needs:
       - build
@@ -156,7 +156,7 @@ jobs:
 
   test-e2e:
     name: End to End testing
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-hydra
 
     needs:
       - build

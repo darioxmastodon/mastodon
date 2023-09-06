@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   compute-suffix:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted-hydra
     steps:
       - id: version_vars
         env:
