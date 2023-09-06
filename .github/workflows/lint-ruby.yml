@@ -25,7 +25,7 @@ on:
 
 jobs:
   lint:
-    runs-on: self-hosted-hydra
+    runs-on: ubuntu-latest
 
     steps:
       - name: Clone repository

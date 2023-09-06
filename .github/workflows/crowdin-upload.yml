@@ -16,7 +16,7 @@ on:
 
 jobs:
   upload-translations:
-    runs-on: self-hosted-hydra
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout
