@@ -21,6 +21,7 @@ class Webhook < ApplicationRecord
     account.pending
     account.updated
     report.created
+    report.updated
     status.created
     status.updated
   ).freeze
@@ -60,7 +61,7 @@ class Webhook < ApplicationRecord
     case event
     when 'account.approved', 'account.created', 'account.updated'
       :manage_users
-    when 'report.created'
+    when 'report.created', 'report.updated'
       :manage_reports
     when 'status.created', 'status.updated'
       :view_devops
