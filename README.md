@@ -1,7 +1,9 @@
-#  Mastodon Glitch+DARiOX Edition  #
+# Mastodon Glitch+DARiOX Edition
+
 [mastodon](https://github.com/mastodon/mastodon)->[glitch-soc](https://github.com/glitch-soc/mastodon)->[dariox](https://github.com/darioxmastodon/mastodon)
 
 ## Original README
+
 # Mastodon Glitch Edition
 
 > Now with automated deploys!
