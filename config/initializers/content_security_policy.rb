@@ -70,7 +70,7 @@ Rails.application.config.content_security_policy do |p|
     p.frame_src       :self, :https
     p.child_src       :self, :blob, assets_host
     p.worker_src      :self, :blob, assets_host
-    p.connect_src     :self, :blob, :data, Rails.configuration.x.streaming_api_base_url, *data_hosts *front_end_build_urls
+    p.connect_src     :self, :blob, :data, Rails.configuration.x.streaming_api_base_url, *data_hosts, *front_end_build_urls
     p.manifest_src    :self, assets_host
 
     if sso_host.present?
