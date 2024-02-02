@@ -34,9 +34,9 @@ Rails.application.config.content_security_policy do |p|
   p.base_uri        :none
   p.default_src     :none
   p.frame_ancestors :none
-  p.font_src        :self, assets_host
+  p.font_src        :self, assets_host, "'fonts.googleapis.com'", "'nts.gstatic.com'"
   p.img_src         :self, :data, :blob, *media_hosts
-  p.style_src       :self, assets_host
+  p.style_src       :self, :data, :blob, :unsafe_inline, assets_host
   p.media_src       :self, :data, *media_hosts
   p.frame_src       :self, :https
   p.manifest_src    :self, assets_host
@@ -58,7 +58,7 @@ Rails.application.config.content_security_policy do |p|
     p.script_src  :self, :unsafe_inline, :unsafe_eval, assets_host
   else
     p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url
-    p.script_src  :self, assets_host, "'wasm-unsafe-eval'"
+    p.script_src  :self, :unsafe_inline, :unsafe_eval, assets_host, "'wasm-unsafe-eval'"
   end
 end
 
