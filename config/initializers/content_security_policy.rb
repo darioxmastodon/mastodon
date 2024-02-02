@@ -54,30 +54,11 @@ Rails.application.config.content_security_policy do |p|
     webpacker_public_host = ENV.fetch('WEBPACKER_DEV_SERVER_PUBLIC', Webpacker.config.dev_server[:public])
     front_end_build_urls = %w(ws http).map { |protocol| "#{protocol}#{Webpacker.dev_server.https? ? 's' : ''}://#{webpacker_public_host}" }
 
-  data_hosts.concat(ENV['EXTRA_DATA_HOSTS'].split('|')) if ENV['EXTRA_DATA_HOSTS']
-
-  data_hosts.uniq!
-
-  Rails.application.config.content_security_policy do |p|
-    p.base_uri        :none
-    p.default_src     :none
-    p.frame_ancestors :none
-    p.script_src      :self, :unsafe_inline, "'unsafe-eval'", assets_host, "'wasm-unsafe-eval'"
-    p.font_src        :self, :data, :blob, assets_host, "'fonts.googleapis.com'", "'nts.gstatic.com'"
-    p.img_src         :self, :data, :blob, *data_hosts
-    p.style_src       :self, :data, :blob, :unsafe_inline, assets_host
-    p.media_src       :self, :data, *data_hosts
-    p.frame_src       :self, :https
-    p.child_src       :self, :blob, assets_host
-    p.worker_src      :self, :blob, assets_host
-    p.connect_src     :self, :blob, :data, Rails.configuration.x.streaming_api_base_url, *data_hosts, *front_end_build_urls
-    p.manifest_src    :self, assets_host
-
-    if sso_host.present?
-      p.form_action     :self, sso_host
-    else
-      p.form_action     :self
-    end
+    p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url, *front_end_build_urls
+    p.script_src  :self, :unsafe_inline, :unsafe_eval, assets_host
+  else
+    p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url
+    p.script_src  :self, assets_host, "'wasm-unsafe-eval'"
   end
 end
 
