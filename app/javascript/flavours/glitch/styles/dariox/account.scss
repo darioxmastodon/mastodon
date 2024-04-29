@@ -18,6 +18,16 @@
             dt {
                 background: $bg !important;
             }
+            dl.verified {
+                background: $profileVerifiedBackground !important;
+                border-color: $profileVerifiedBorderColor !important;
+
+                dt,
+                dd {
+                    background: transparent !important;
+                    color: $profileVerifiedText !important;
+                }
+            }
         }
         &__bio,
         &__joined {
@@ -38,6 +48,7 @@
         background: $bg !important;
     }
 }
+
 .account-authorize {
     &__wrapper {
         background: $bg;
