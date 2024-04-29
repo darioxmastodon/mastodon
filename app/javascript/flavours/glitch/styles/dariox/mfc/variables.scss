@@ -1,23 +1,23 @@
 /* define scss variables in palette.scss of subtheme */
 :root {
---bg: $bg;
---bgInner: $bgInner;
+    --bg: $bg;
+    --bgInner: $bgInner;
 
---text: $text;
---textBold: $textBold;
---textMuted: $textMuted;
+    --text: $text;
+    --textBold: $textBold;
+    --textMuted: $textMuted;
 
---profileVerifiedText: $profileVerifiedText;
---profileVerifiedBackground: $profileVerifiedBackground;
---profileVerifiedBorderColor: $profileVerifiedBorderColor;
+    --profileVerifiedText: $profileVerifiedText;
+    --profileVerifiedBackground: $profileVerifiedBackground;
+    --profileVerifiedBorderColor: $profileVerifiedBorderColor;
 
---bgPage: $bgPage;
---textPage: $textPage;
---textPageBold: $textPageBold;
---textPageMuted: $textPageMuted;
+    --bgPage: $bgPage;
+    --textPage: $textPage;
+    --textPageBold: $textPageBold;
+    --textPageMuted: $textPageMuted;
 
---bgHead: $bgHead;
---textHead: $textHead;
---accent: $accent;
---accentText: $accentText;
+    --bgHead: $bgHead;
+    --textHead: $textHead;
+    --accent: $accent;
+    --accentText: $accentText;
 }
