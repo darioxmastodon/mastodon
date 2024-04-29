@@ -1,5 +1,6 @@
 @import './vars.scss';
 .account {
+    background: $bg !important;
     &__section-headline {
         a.active::after,
         button.active::after {

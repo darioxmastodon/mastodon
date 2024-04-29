@@ -16,5 +16,11 @@ license: Public Domain
     height: 180px;
     z-index: -1
 }
-.compose-form {z-index: 1}
-.drawer__inner {height: 100%} /* firefox bug highlights drawer text on click? */
+.compose-form {
+    z-index: 1;
+}
+
+/* firefox bug highlights drawer text on click? */
+.drawer__inner {
+    height: 100%;
+}

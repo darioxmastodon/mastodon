@@ -8,5 +8,7 @@ author: trwnh
 license: Public Domain
 */
 @media (min-width: 1600px) {
-    .landing-page .container {max-width: 1600px}
+    .landing-page .container {
+        max-width: 1600px;
+    }
 }

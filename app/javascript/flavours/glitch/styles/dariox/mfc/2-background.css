@@ -26,6 +26,7 @@ body.app-body,
 .account__header__image,
 .account__header__account-note textarea:focus,
 .flex-spacer, .getting-started, .getting-started__wrapper,
+.explore__search-results,
 /* DMs */
 .status.status-direct,
     .status.status-direct:not(.read),
@@ -112,8 +113,20 @@ body.theme-default,
 .account__header__bio .account__header__fields,
 .account__header__bio .account__header__fields dd
 {
-background: var(--bgPage);
-color: var(--textPage)
+    background: var(--bgPage);
+    color: var(--textPage);
+}
+
+.search-results__section__header,
+.getting-started__trends {
+    background: var(--bg);
+}
+.account {
+    background: var(--bg);
+}
+.explore__search-results
+.explore__search-results {
+    background: transparent;
 }
 
 /*--------------------
@@ -146,7 +159,7 @@ override for bold text
 /*account fields*/
 .account__header__bio .account__header__fields dt
 {
-color: var(--textPageBold)
+    color: var(--textPageBold);
 }
 
 /*---------------------
@@ -194,25 +207,33 @@ body .neutral-hint, .admin-wrapper .content .neutral-hint,
 .form-footer a,
 .lighter .simple_form p.hint.subtle-hint
 {
-color: var(--textPageMuted)
+    color: var(--textPageMuted);
 }
 
 /* border color fix */
 .status.status-direct:not(.read),
 .table-of-contents li a,
 .report-dialog-modal .button.button-secondary
-{border-color: var(--textPageMuted)}
+{
+    border-color: var(--textPageMuted);
+}
 
 .dismissable-banner,
 .about__domain-blocks,
 .emoji-mart-search input,
 .compose-panel hr, .navigation-panel hr
-{border-color: transparent}
+{
+    border-color: transparent;
+}
 
 .about__domain-blocks__domain,
 .account__header__bio .account__header__fields dl
-{border-color: var(--bg)}
+{
+    border-color: var(--bg);
+}
 
 /* account fields */
 .account__header__bio .account__header__fields .verified a, .account__header__bio .account__header__fields .verified dd, .account__header__bio .account__header__fields .verified dt
-{background: transparent}
+{
+    background: transparent;
+}

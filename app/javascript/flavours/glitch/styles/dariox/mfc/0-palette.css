@@ -125,3 +125,27 @@
 --accent: #ff3e00;
 --accentText: var(--textPageBold);
 }
+
+
+:root {
+    --bg: rgb(26, 21, 21);
+    --bgInner: rgb(30,27,27);
+    
+    --text: rgb(255, 255, 255);
+    --textBold: rgb(255, 255, 255);
+    --textMuted: rgb(152, 157, 156);
+
+    --profileVerifiedText: #79bd9a;
+    --profileVerifiedBackground: rgba(121, 189, 154, 0.25);
+    --profileVerifiedBorderColor: rgba(121, 189, 154, .5);
+
+    --bgPage: rgb(42,38,37);
+    --textPage: var(--text);
+    --textPageBold: var(--textBold);
+    --textPageMuted: var(--textMuted);
+
+    --bgHead: rgb(94,28,148);
+    --textHead: var(--textBold);
+    --accent: rgb(214,41,130);
+    --accentText: var(--textBold);
+}

@@ -6,5 +6,9 @@ Make search results look better:
 author: trwnh
 license: Public Domain
 */
-.search__icon .fa.active {opacity: 1}
-.drawer__inner.darker {background: rgba(0,0,0,0.5)}
+.search__icon .fa.active {
+    opacity: 100%;
+}
+.drawer__inner.darker {
+    background: rgba(0,0,0, 50%);
+}
