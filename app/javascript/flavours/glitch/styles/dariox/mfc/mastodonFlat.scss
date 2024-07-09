@@ -4,3 +4,15 @@
 @import '3-highlights';
 @import '5-material';
 @import '6-actions';
+
+.column > .scrollable {
+    border: none !important;
+}
+
+.focusable:focus {
+    border: none !important;
+}
+
+.focusable:focus .status {
+    border: 2px solid var(--accent) !important;
+}
