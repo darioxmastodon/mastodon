@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 source 'https://rubygems.org'
-ruby '>= 3.1.0'
+ruby '>= 3.2.0'
 
 gem 'propshaft'
 gem 'puma', '~> 6.3'
@@ -16,10 +16,10 @@ gem 'pghero'
 
 gem 'aws-sdk-s3', '~> 1.123', require: false
 gem 'blurhash', '~> 0.1'
-gem 'fog-core', '<= 2.4.0'
+gem 'fog-core', '<= 2.6.0'
 gem 'fog-openstack', '~> 1.0', require: false
+gem 'jd-paperclip-azure', '~> 3.0', require: false
 gem 'kt-paperclip', '~> 7.2'
-gem 'md-paperclip-azure', '~> 2.2', require: false
 gem 'ruby-vips', '~> 2.2', require: false
 
 gem 'active_model_serializers', '~> 0.10'
@@ -47,7 +47,6 @@ gem 'color_diff', '~> 0.1'
 gem 'csv', '~> 3.2'
 gem 'discard', '~> 1.2'
 gem 'doorkeeper', '~> 5.6'
-gem 'ed25519', '~> 1.3'
 gem 'fast_blank', '~> 1.0'
 gem 'fastimage'
 gem 'hiredis', '~> 0.6'
@@ -62,9 +61,8 @@ gem 'irb', '~> 1.8'
 gem 'kaminari', '~> 1.2'
 gem 'link_header', '~> 0.0'
 gem 'mario-redis-lock', '~> 1.2', require: 'redis_lock'
-gem 'mime-types', '~> 3.5.0', require: 'mime/types/columnar'
+gem 'mime-types', '~> 3.6.0', require: 'mime/types/columnar'
 gem 'nokogiri', '~> 1.15'
-gem 'nsa'
 gem 'oj', '~> 3.14'
 gem 'ox', '~> 2.14'
 gem 'parslet'
@@ -88,7 +86,7 @@ gem 'sidekiq-unique-jobs', '~> 7.1'
 gem 'simple_form', '~> 5.2'
 gem 'simple-navigation', '~> 4.4'
 gem 'stoplight', '~> 4.1'
-gem 'strong_migrations', '1.8.0'
+gem 'strong_migrations'
 gem 'tty-prompt', '~> 0.23', require: false
 gem 'twitter-text', '~> 3.1.0'
 gem 'tzinfo-data', '~> 1.2023'
@@ -100,10 +98,10 @@ gem 'json-ld'
 gem 'json-ld-preloaded', '~> 3.2'
 gem 'rdf-normalize', '~> 0.5'
 
-gem 'opentelemetry-api', '~> 1.2.5'
+gem 'opentelemetry-api', '~> 1.4.0'
 
 group :opentelemetry do
-  gem 'opentelemetry-exporter-otlp', '~> 0.28.0', require: false
+  gem 'opentelemetry-exporter-otlp', '~> 0.29.0', require: false
   gem 'opentelemetry-instrumentation-active_job', '~> 0.7.1', require: false
   gem 'opentelemetry-instrumentation-active_model_serializers', '~> 0.20.1', require: false
   gem 'opentelemetry-instrumentation-concurrent_ruby', '~> 0.21.2', require: false
@@ -112,9 +110,9 @@ group :opentelemetry do
   gem 'opentelemetry-instrumentation-http', '~> 0.23.2', require: false
   gem 'opentelemetry-instrumentation-http_client', '~> 0.22.3', require: false
   gem 'opentelemetry-instrumentation-net_http', '~> 0.22.4', require: false
-  gem 'opentelemetry-instrumentation-pg', '~> 0.27.1', require: false
-  gem 'opentelemetry-instrumentation-rack', '~> 0.24.1', require: false
-  gem 'opentelemetry-instrumentation-rails', '~> 0.31.0', require: false
+  gem 'opentelemetry-instrumentation-pg', '~> 0.29.0', require: false
+  gem 'opentelemetry-instrumentation-rack', '~> 0.25.0', require: false
+  gem 'opentelemetry-instrumentation-rails', '~> 0.32.0', require: false
   gem 'opentelemetry-instrumentation-redis', '~> 0.25.3', require: false
   gem 'opentelemetry-instrumentation-sidekiq', '~> 0.25.2', require: false
   gem 'opentelemetry-sdk', '~> 1.4', require: false
@@ -126,9 +124,6 @@ group :test do
 
   # Adds RSpec Error/Warning annotations to GitHub PRs on the Files tab
   gem 'rspec-github', '~> 2.4', require: false
-
-  # RSpec progress bar formatter
-  gem 'fuubar', '~> 2.5'
 
   # RSpec helpers for email specs
   gem 'email_spec'
@@ -150,10 +145,12 @@ group :test do
   gem 'rails-controller-testing', '~> 1.0'
 
   # Validate schemas in specs
-  gem 'json-schema', '~> 4.0'
+  gem 'json-schema', '~> 5.0'
 
   # Test harness fo rack components
   gem 'rack-test', '~> 2.1'
+
+  gem 'shoulda-matchers'
 
   # Coverage formatter for RSpec test if DISABLE_SIMPLECOV is false
   gem 'simplecov', '~> 0.22', require: false
@@ -211,7 +208,7 @@ group :development, :test do
   gem 'test-prof'
 
   # RSpec runner for rails
-  gem 'rspec-rails', '~> 6.0'
+  gem 'rspec-rails', '~> 7.0'
 end
 
 group :production do
