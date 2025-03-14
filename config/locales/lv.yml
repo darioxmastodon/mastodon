@@ -217,6 +217,7 @@ lv:
         enable_user: Ieslēgt Lietotāju
         memorialize_account: Saglabāt Kontu Piemiņai
         promote_user: Izceltt Lietotāju
+        publish_terms_of_service: Publicēt pakalpojuma izmantošanas noteikumus
         reject_appeal: Noraidīt Apelāciju
         reject_user: Noraidīt lietotāju
         remove_avatar_user: Noņemt profila attēlu
@@ -273,6 +274,7 @@ lv:
         enable_user_html: "%{name} iespējoja pieteikšanos lietotājam %{target}"
         memorialize_account_html: "%{name} pārvērta %{target} kontu par atmiņas lapu"
         promote_user_html: "%{name} paaugstināja lietotāju %{target}"
+        publish_terms_of_service_html: "%{name} padarīja pieejamus pakalpojuma izmantošanas noteikumu atjauninājumus"
         reject_appeal_html: "%{name} noraidīja satura pārraudzības lēmuma iebildumu no %{target}"
         reject_user_html: "%{name} noraidīja reģistrēšanos no %{target}"
         remove_avatar_user_html: "%{name} noņēma %{target} profila attēlu"
@@ -429,7 +431,7 @@ lv:
       private_comment: Privāts komentārs
       private_comment_hint: Atstāj komentāru par šo domēna ierobežojumu moderatoru iekšējai lietošanai.
       public_comment: Publisks komentārs
-      public_comment_hint: Atstāj komentāru par šo domēna ierobežojumu plašai sabiedrībai, ja ir iespējota domēnu ierobežojumu saraksta reklamēšana.
+      public_comment_hint: Piebilde par šo domēna ierobežojumu vispārējai sabiedrībai, ja ir iespējota domēnu ierobežojumu saraksta reklamēšana.
       reject_media: Noraidīt multivides failus
       reject_media_hint: Noņem lokāli saglabātos multivides failus un atsaka tos lejupielādēt nākotnē. Nav nozīmes apturēšanai
       reject_reports: Noraidīt ziņojumus
@@ -443,6 +445,7 @@ lv:
         one: "%{count} mēģinājums pagājušajā nedēļā"
         other: "%{count} reģistrēšanās mēģinājumi pagājušajā nedēļā"
         zero: "%{count} mēģinājumu pagājušajā nedēļā"
+      created_msg: Sekmīgi liegts e-pasta domēns
       delete: Dzēst
       dns:
         types:
@@ -451,6 +454,7 @@ lv:
       new:
         create: Pievienot domēnu
         resolve: Atrisināt domēnu
+        title: Liegt jaunu e-pasta domēnu
       not_permitted: Nav atļauta
       resolved_through_html: Atrisināts, izmantojot %{domain}
       title: Bloķētie e-pasta domēni
@@ -641,7 +645,7 @@ lv:
         create_and_resolve: Atrisināt ar piezīmi
         create_and_unresolve: Atvērt atkārtoti ar piezīmi
         delete: Dzēst
-        placeholder: Apraksti veiktās darbības vai citus saistītus atjauninājumus...
+        placeholder: Jāapraksta veiktās darbības vai jebkuri citi saistītie atjauninājumi...
         title: Piezīmes
       notes_description_html: Skati un atstāj piezīmes citiem moderatoriem un sev nākotnei
       processed_msg: 'Pārskats #%{id} veiksmīgi apstrādāts'
@@ -746,13 +750,13 @@ lv:
     rules:
       add_new: Pievienot noteikumu
       delete: Dzēst
-      description_html: Lai gan lielākā daļa apgalvo, ka ir izlasījuši pakalpojumu sniegšanas noteikumus un piekrīt tiem, parasti cilvēki to izlasa tikai pēc problēmas rašanās. <strong>Padariet vienkāršāku sava servera noteikumu uztveršanu, veidojot tos vienkāršā sarakstā pa punktiem.</strong> Centieties, lai atsevišķi noteikumi būtu īsi un vienkārši, taču arī nesadaliet tos daudzos atsevišķos vienumos.
+      description_html: Kaut arī lielākā daļa apgalvo, ka ir lasījuši un piekrīt pakalpojuma izmantošanas noteikumiem, parasti cilvēki tos neizlasa, līdz rodas sarežģījumi. <strong>Padari vienkāršāku sava servera noteikumu pārskatīšanu, sniedzot tos vienkāršā uzsvēruma punktu sarakstā!</strong> Jāmēģina atsevišķus noteikumus veidot īsus un vienkāršus, bet jāmēģina arī tos nesadalīt daudzos atsevišķos vienumos.
       edit: Labot nosacījumu
-      empty: Servera noteikumi vēl nav definēti.
+      empty: Vēl nav pievienots neviens servera noteikums.
       title: Servera noteikumi
     settings:
       about:
-        manage_rules: Pārvaldīt servera nosacījumus
+        manage_rules: Pārvaldīt servera noteikumus
         preamble: Sniedz padziļinātu informāciju par to, kā serveris tiek darbināts, moderēts un finansēts.
         rules_hint: Noteikumiem, kas taviem lietotājiem ir jāievēro, ir īpaša sadaļa.
         title: Par
@@ -767,7 +771,7 @@ lv:
         title: Pieprasīt jaunajiem lietotājiem atrisināt CAPTCHA, lai apstiprinātu savu kontu
       content_retention:
         danger_zone: Bīstama sadaļa
-        preamble: Kontrolē, kā Mastodon tiek glabāts lietotāju ģenerēts saturs.
+        preamble: Pārraugi, kā Mastodon tiek glabāts lietotāju izveidots saturs!
         title: Satura saglabāšana
       default_noindex:
         desc_html: Ietekmē visus lietotājus, kuri paši nav mainījuši šo iestatījumu
@@ -821,6 +825,7 @@ lv:
       back_to_account: Atpakaļ uz konta lapu
       back_to_report: Atpakaļ uz paziņojumu lapu
       batch:
+        add_to_report: 'Pievienot atskaitei #%{id}'
         remove_from_report: Noņemt no ziņojuma
         report: Ziņojums
       contents: Saturs
@@ -832,13 +837,17 @@ lv:
       media:
         title: Multivide
       metadata: Metadati
+      no_history: Šis ieraksts nav bijis labots
       no_status_selected: Neviena ziņa netika mainīta, jo neviena netika atlasīta
       open: Atvērt ziņu
       original_status: Oriģinālā ziņa
       reblogs: Reblogi
+      replied_to_html: Atbildēja %{acct_link}
       status_changed: Ziņa mainīta
       status_title: Publicēja @%{name}
+      title: Konta ieraksti - @%{name}
       trending: Aktuāli
+      view_publicly: Skatīt publiski
       visibility: Redzamība
       with_media: Ar multividi
     strikes:
@@ -876,8 +885,8 @@ lv:
         message_html: 'Nesaderīga Elasticsearch versija: %{value}'
         version_comparison: Darbojas Elasticsearch %{running_version}, tomēr ir nepieciešama %{required_version}
       rules_check:
-        action: Pārvaldīt servera nosacījumus
-        message_html: Tu neesi definējis nevienu servera nosacījumu.
+        action: Pārvaldīt servera noteikumus
+        message_html: Nav pievienots neviens servera noteikums.
       sidekiq_process_check:
         message_html: Rindā(s) %{value} nedarbojas neviens Sidekiq process. Lūdzu, pārskati savu Sidekiq konfigurāciju
       software_version_check:
@@ -907,11 +916,42 @@ lv:
       name: Nosaukums
       newest: Jaunākie
       oldest: Vecākie
+      open: Apskatīt publiski
       reset: Atiestatīt
       review: Pārskatīt stāvokli
       search: Meklēt
       title: Tēmturi
       updated_msg: Tēmtura iestatījumi ir veiksmīgi atjaunināti
+    terms_of_service:
+      back: Atpakaļ uz pakalpojuma izmantošanas noteikumiem
+      changelog: Kas ir mainījies
+      create: Izmantot savus
+      current: Pašreizējie
+      draft: Melnraksts
+      generate: Izmantot sagatavi
+      generates:
+        action: Izveidot
+        chance_to_review_html: "<strong>Izveidotie pakalpojuma izmantošanas noteikumi netiks laisti klajā automātiski.</strong> Būs iespēja izskatīt iznākumu. Lūgums norādīt nepieciešamo informāciju, lai turpinātu."
+        explanation_html: Pakalpojuma izmantošanas noteikumu sagatave tiek piedāvāta tikai izzināšanas nolūkam, un to nevajadzētu izmantot kā juridisku padomu jebkurā jautājumā. Lūgums sazināties ar savu juridisko padomdevēju par saviem apstākļiem un noteiktiem juridiskiem jautājumiem.
+        title: Pakalpojuma izmantošānas noteikumu uzstādīšana
+      history: Vēsture
+      live: Darbībā
+      no_history: Nav ierakstu par pakalpojuma izmantošanas noteikumu izmaiņām.
+      no_terms_of_service_html: Pašlaik nav uzstādīti pakalpojuma izmantošanas noteikumi. Tie ir paredzēti, lai sniegtu skaidrību un aizsargātu no iespējamas atbildības strīdos ar lietotājiem.
+      notified_on_html: Lietotājiem paziņots %{date}
+      notify_users: Paziņot lietotājiem
+      preview:
+        explanation_html: 'E-pasta ziņojums tiks nosūtīts <strong>%{display_count} lietotājiem</strong>, kuri ir reģistrējušies pirms %{date}. Šis teksts tiks iekļauts e-pasta ziņojumā:'
+        send_preview: Nosūtīt priekšskatījumu uz %{email}
+        send_to_all:
+          one: Nosūtīt %{display_count} e-pasta ziņojumu
+          other: Nosūtīt %{display_count} e-pasta ziņojumus
+          zero: Nosūtīt %{display_count} e-pasta ziņojumu
+        title: Priekškatīt pakalpojuma izmantošanas noteikumu paziņojumu
+      publish: Publicēt
+      published_on_html: Publicēti %{date}
+      save_draft: Saglabāt melnrakstu
+      title: Pakalpojuma izmantošanas noteikumi
     title: Pārvaldība
     trends:
       allow: Atļaut
@@ -1072,8 +1112,8 @@ lv:
     created: Lietojumprogramma ir veiksmīgi izveidota
     destroyed: Lietojumprogramma ir veiksmīgi dzēsta
     logout: Iziet
-    regenerate_token: Atjaunot piekļuves marķieri
-    token_regenerated: Piekļuves marķieris veiksmīgi atjaunots
+    regenerate_token: Atkārtoti izveidot piekļuves pilnvaru
+    token_regenerated: Piekļuves pilnvara veiksmīgi izveidota atkārtoti
     warning: Esi ļoti uzmanīgs ar šiem datiem. Nekad nedalies ne ar vienu ar tiem!
     your_token: Tavs piekļuves marķieris
   auth:
@@ -1102,7 +1142,7 @@ lv:
     dont_have_your_security_key: Vai tev nav drošības atslēgas?
     forgot_password: Aizmirsi paroli?
     invalid_reset_password_token: Paroles atiestatīšanas pilnvara nav derīga, vai tai ir beidzies derīgums. Lūdzu, pieprasi jaunu.
-    link_to_otp: Jāievada divpakāpju kods no tālruņa vai atkopšanas kods
+    link_to_otp: Jāievada divpakāpju kods no tālruņa vai atkpes kods
     link_to_webauth: Lieto savu drošības atslēgas iekārtu
     log_in_with: Pieslēgties ar
     login: Pieteikties
@@ -1110,7 +1150,6 @@ lv:
     migrate_account: Pāriešana uz citu kontu
     migrate_account_html: Ja vēlies novirzīt šo kontu uz citu, tu vari <a href="%{path}">to konfigurēt šeit</a>.
     or_log_in_with: Vai piesakies ar
-    privacy_policy_agreement_html: Esmu izlasījis un piekrītu <a href="%{privacy_policy_path}" target="_blank">privātuma politikai</a>
     progress:
       confirm: Apstiprināt e-pasta adresi
       details: Tavi dati
@@ -1135,7 +1174,6 @@ lv:
     set_new_password: Iestatīt jaunu paroli
     setup:
       email_below_hint_html: Jāpārbauda sava surogātpasta mape vai jāpieprasa vēl vienu! Savu e-pasta adresi var labot, ja tā ir nepareiza.
-      email_settings_hint_html: Noklikšķini uz saites, kuru mēs tev nosūtījām, lai apstiprinātu %{email}. Mēs tepat pagaidīsim.
       link_not_received: Vai nesaņēmi sati?
       new_confirmation_instructions_sent: Pēc dažām minūtēm saņemsi jaunu e-pasta ziņojumu ar apstiprinājuma saiti.
       title: Pārbaudi savu iesūtni
@@ -1144,7 +1182,6 @@ lv:
       title: Pieteikties %{domain}
     sign_up:
       manual_review: Reģistrācijas domēnā %{domain} manuāli pārbauda mūsu moderatori. Lai palīdzētu mums apstrādāt tavu reģistrāciju, uzraksti mazliet par sevi un to, kāpēc vēlies kontu %{domain}.
-      preamble: Ar kontu šajā Mastodon serverī varēsi sekot jebkuram citam tīklā esošam cilvēkam neatkarīgi no tā, kur tiek mitināts viņa konts.
       title: Atļauj tevi iestatīt %{domain}.
     status:
       account_status: Konta statuss
@@ -1155,6 +1192,7 @@ lv:
       view_strikes: Skati iepriekšējos brīdinājumus par savu kontu
     too_fast: Veidlapa ir iesniegta pārāk ātri, mēģini vēlreiz.
     use_security_key: Lietot drošības atslēgu
+    user_agreement_html: Es esmu izlasījis un piekrītu <a href="%{terms_of_service_path}" target="_blank">pakalpojuma izmantošanas noteikumiem</a> un <a href="%{privacy_policy_path}" target="_blank">privātuma nosacījumiem</a>
   author_attribution:
     example_title: Parauga teksts
     more_from_html: Vairāk no %{name}
@@ -1403,7 +1441,7 @@ lv:
       '604800': 1 nedēļa
       '86400': 1 diena
     expires_in_prompt: Nekad
-    generate: Ģenerēt uzaicinājuma saiti
+    generate: Izveidot uzaicinājuma saiti
     invalid: Šis uzaicinājums nav derīgs
     invited_by: 'Tevi uzaicināja:'
     max_uses:
@@ -1411,7 +1449,7 @@ lv:
       other: "%{count} lietojumi"
       zero: "%{count} lietojumu"
     max_uses_prompt: Nav ierobežojuma
-    prompt: Izveido un kopīgo saites ar citiem, lai piešķirtu piekļuvi šim serverim
+    prompt: Jāizveido un jākopīgo saites ar citiem, lai nodrošinātu piekļuvi šim serverim
     table:
       expires_at: Beidzas
       uses: Lieto
@@ -1534,10 +1572,10 @@ lv:
           thousand: K
           trillion: T
   otp_authentication:
-    code_hint: Lai apstiprinātu, ievadi autentifikācijas lietotnes ģenerēto kodu
-    description_html: Jā iespējo <strong>divpakāpju autentifikāciju</strong> ar autentificēšanas lietotni, pieteikšanās laikā būs nepieciešams tālrunis, kurā tiks izveidoti ievadāmie kodi.
+    code_hint: Jāievada autentificētājlietotnes izveidotais kods, lai apstiprinātu
+    description_html: Jā iespējo <strong>divpakāpju autentifikāciju</strong> ar autentificētājlietotni, pieteikšanās laikā būs nepieciešams tālrunis, kurā tiks izveidoti ievadāmie kodi.
     enable: Iespējot
-    instructions_html: "<strong>Skenē šo QR kodu Google Authenticator vai līdzīgā TOTP lietotnē savā tālrunī</strong>. No šī brīža šī lietotne ģenerēs marķierus, kas tev būs jāievada, piesakoties."
+    instructions_html: "<strong>Šis kvadrātods savā tālrunī jānolasa ar Google Authenticator vai līdzīgu TOTP lietotni</strong>. No šī brīža šī lietotne veidos ciparvienības, kas būs jāievada piesakoties."
     manual_instructions: 'Ja nevari noskenēt QR kodu un tas ir jāievada manuāli, šeit ir noslēpums vienkāršā tekstā:'
     setup: Iestatīt
     wrong_code: Ievadītais kods bija nederīgs. Vai servera un ierīces laiks ir pareizs?
@@ -1612,7 +1650,7 @@ lv:
   scheduled_statuses:
     over_daily_limit: Tu esi pārsniedzis šodien ieplānoto %{limit} ziņu ierobežojumu
     over_total_limit: Tu esi pārsniedzis ieplānoto %{limit} ziņu ierobežojumu
-    too_soon: Ieplānotajam datumam ir jābūt nākotnē
+    too_soon: datumam jābūt nākotnē
   self_destruct:
     lead_html: Diemžēl domēns <strong>%{domain}</strong> tiek neatgriezeniski slēgts. Ja tev tur bija konts, tu nevarēsi turpināt to lietot, taču joprojām vari pieprasīt savu datu kopiju.
     title: Šis serveris tiek slēgts
@@ -1720,10 +1758,10 @@ lv:
       in_reply_not_found: Šķiet, ka ziņa, uz kuru tu mēģini atbildēt, nepastāv.
     over_character_limit: pārsniegts %{max} rakstzīmju ierobežojums
     pin_errors:
-      direct: Ziņojumus, kas ir redzami tikai minētajiem lietotājiem, nevar piespraust
-      limit: Tu jau esi piespraudis maksimālo ziņu skaitu
+      direct: Ierakstus, kas ir redzami tikai pieminētajiem lietotājiem, nevar piespraust
+      limit: Jau ir piesprausts lielākais iespējamais ierakstu skaits
       ownership: Kāda cita ierakstu nevar piespraust
-      reblog: Izceltu ierakstu nevar piespraust
+      reblog: Pastiprinātu ierakstu nevar piespraust
     title: "%{name}: “%{quote}”"
     visibilities:
       direct: Tiešs
@@ -1746,8 +1784,8 @@ lv:
     keep_direct_hint: Nedzēš nevienu tavu tiešo ziņojumu
     keep_media: Saglabāt ziņas ar multivides pielikumiem
     keep_media_hint: Neizdzēš nevienu no tavām ziņām, kurām ir multivides pielikumi
-    keep_pinned: Saglabāt piespraustās ziņas
-    keep_pinned_hint: Nedzēš nevienu tavis piesprausto ziņu
+    keep_pinned: Paturēt piespraustos ierakstus
+    keep_pinned_hint: Neizdzēš nevienu no Tevis piespraustajiem ierakstiem
     keep_polls: Saglabāt aptaujas
     keep_polls_hint: Nedzēš nevienu tavu aptauju
     keep_self_bookmark: Saglabāt ziņas, kuras esi pievienojis grāmatzīmēm
@@ -1775,6 +1813,8 @@ lv:
       too_late: Brīdinājuma apstrīdēšanas laiks ir nokavēts
   tags:
     does_not_match_previous_name: nesakrīt ar iepriekšējo nosaukumu
+  terms_of_service:
+    title: Pakalpojuma izmantošanas noteikumi
   themes:
     contrast: Mastodon (Augsts kontrasts)
     default: Mastodon (Tumšs)
@@ -1796,13 +1836,13 @@ lv:
     edit: Labot
     enabled: Divpakāpju autentifikācija ir iespējota
     enabled_success: Divpakāpju autentifikācija veiksmīgi iespējota
-    generate_recovery_codes: Ģenerēt atkopšanas kodus
-    lost_recovery_codes: Atkopšanas kodi ļauj atgūt piekļuvi tavam kontam, ja pazaudē tālruni. Ja esi pazaudējis atkopšanas kodus, tu vari tos ģenerēt šeit. Tavi vecie atkopšanas kodi tiks anulēti.
+    generate_recovery_codes: Izveidot atkopes kodus
+    lost_recovery_codes: Atkopes kodi ļauj atgūt piekļuvi savam kontam, ja ir pazaudēts tālrunis. Ja ir pazaudēti atkopes kodi, tos var izveidot šeit. Iepriekšējie atkopšanas kodi kļūs nederīgi.
     methods: Divpakāpju veidi
     otp: Autentifikātora lietotne
-    recovery_codes: Veidot atkopšanas kodu rezerves kopijas
-    recovery_codes_regenerated: Atkopšanas kodi veiksmīgi atjaunoti
-    recovery_instructions_html: Ja kādreiz zaudēsi piekļuvi savam tālrunim, vari izmantot kādu no tālāk norādītajiem atkopšanas kodiem, lai atgūtu piekļuvi savam kontam. <strong>Glabā atkopšanas kodus drošībā</strong>. Piemēram, tu vari tos izdrukāt un uzglabāt kopā ar citiem svarīgiem dokumentiem.
+    recovery_codes: Veidot atkopes kodu rezerves kopijas
+    recovery_codes_regenerated: Atkopes kodi veiksmīgi izveidoti no jauna
+    recovery_instructions_html: Ja kādreiz zaudēsi piekļuvi savam tālrunim, vari izmantot kādu no zemāk norādītajiem atkopes kodiem, lai atgūtu piekļuvi savam kontam. <strong>Atkpes kodi jātur drošībā</strong>. Piemēram, tos var izdrukāt un glabāt kopā ar citiem svarīgiem dokumentiem.
     webauthn: Drošības atslēgas
   user_mailer:
     appeal_approved:
@@ -1824,6 +1864,13 @@ lv:
       further_actions_html: Ja tas nebiji tu, iesakām nekavējoties %{action} un iespējot divu faktoru autentifikāciju, lai tavs konts būtu drošībā.
       subject: Tavam kontam ir piekļūts no jaunas IP adreses
       title: Jauna pieteikšanās
+    terms_of_service_changed:
+      agreement: Ar %{domain} izmantošanas tuprināšanu tiek piekrists šiem noteikumiem. Ja ir iebildumi pret atjauninātajiem noteikumiem, savu piekrišanu var atcelt jebkurā laikā ar sava konta izdzēšanu.
+      changelog: 'Šeit īsumā ir aprakstīts, ko šis atjauninājums nozīmē:'
+      sign_off: "%{domain} komanda"
+      subject: Mūsu pakalpojuma izmantošanas noteikumu atjauninājumi
+      subtitle: Mainās %{domain} pakalpojuma izmantošanas noteikumi
+      title: Svarīgs atjauninājums
     warning:
       appeal: Iesniegt apelāciju
       appeal_description: Ja uzskatāt, ka tā ir kļūda, varat iesniegt apelāciju %{instance} darbiniekiem.
