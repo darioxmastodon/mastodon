@@ -1156,7 +1156,6 @@ sc:
       reblog: Is cumpartziduras non podent èssere apicadas
     title: '%{name}: "%{quote}"'
     visibilities:
-      direct: Deretu
       private: Isceti pro chie ti sighit
       private_long: Ammustra isceti a chie ti sighit
       public: Pùblicu
@@ -1242,7 +1241,6 @@ sc:
       follow_title: Personaliza s'ischermu printzipale
       post_action: Iscrie
       post_title: Pùblica pro sa primu borta
-      share_action: Cumpartzi
       share_title: Cumpartzi su profilu tuo de Mastodon
       sign_in_action: Intra
       subject: Ti donamus su benebènnidu a Mastodon

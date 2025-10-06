@@ -1,5 +1,3 @@
-import { injectIntl } from 'react-intl';
-
 import { connect } from 'react-redux';
 
 import {
@@ -21,7 +19,7 @@ const sideArmPrivacy = state => {
   const inReplyTo = state.getIn(['compose', 'in_reply_to']);
   const replyPrivacy = inReplyTo ? state.getIn(['statuses', inReplyTo, 'visibility']) : null;
   const sideArmBasePrivacy = state.getIn(['local_settings', 'side_arm']);
-  const sideArmRestrictedPrivacy = replyPrivacy ? privacyPreference(replyPrivacy, sideArmBasePrivacy) : null;
+  const sideArmRestrictedPrivacy = replyPrivacy && sideArmBasePrivacy !== 'none' ? privacyPreference(replyPrivacy, sideArmBasePrivacy) : null;
   let sideArmPrivacy = null;
   switch (state.getIn(['local_settings', 'side_arm_reply_mode'])) {
   case 'copy':
@@ -58,7 +56,7 @@ const mapStateToProps = state => ({
   maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 500),
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = (dispatch, props) => ({
 
   onChange (text) {
     dispatch(changeCompose(text));
@@ -71,7 +69,11 @@ const mapDispatchToProps = (dispatch) => ({
         modalProps: { overridePrivacy },
       }));
     } else {
-      dispatch(submitCompose(overridePrivacy));
+      dispatch(submitCompose(overridePrivacy, (status) => {
+        if (props.redirectOnSuccess) {
+          window.location.assign(status.url);
+        }
+      }));
     }
   },
 
@@ -101,4 +103,4 @@ const mapDispatchToProps = (dispatch) => ({
 
 });
 
-export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ComposeForm));
+export default connect(mapStateToProps, mapDispatchToProps)(ComposeForm);

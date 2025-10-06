@@ -683,7 +683,6 @@ an:
         preamble: Exposar conteniu interesant a la superficie ye fundamental pa incorporar nuevos usuarios que pueden no conoixer a dengún Mastodon. Controla cómo funcionan quantas opcions d'escubrimiento en o tuyo servidor.
         profile_directory: Directorio de perfils
         public_timelines: Linias de tiempo publicas
-        publish_discovered_servers: Publicar los servidors descubiertos
         publish_statistics: Publicar las estatisticas
         title: Escubrimiento
         trends: Tendencias
@@ -1411,7 +1410,6 @@ an:
       reblog: Un boost no puede fixar-se
     title: "%{name}: «%{quote}»"
     visibilities:
-      direct: Directa
       private: Nomás amostrar a seguidores
       private_long: Nomás amostrar a las tuyas seguidores
       public: Publico

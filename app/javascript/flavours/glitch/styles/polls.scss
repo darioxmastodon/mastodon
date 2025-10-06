@@ -1,3 +1,6 @@
+@use 'variables' as *;
+@use 'functions' as *;
+
 .poll {
   margin-top: 16px;
   font-size: 14px;
@@ -104,7 +107,8 @@
       cursor: pointer;
     }
 
-    &.editable {
+    &.editable,
+    &.disabled {
       align-items: center;
       overflow: visible;
     }
@@ -162,7 +166,8 @@
     }
   }
 
-  &__option.editable &__input {
+  &__option.editable &__input,
+  &__option.disabled &__input {
     &:active,
     &:focus,
     &:hover {

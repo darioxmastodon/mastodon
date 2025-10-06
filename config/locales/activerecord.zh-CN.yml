@@ -44,7 +44,7 @@ zh-CN:
           attributes:
             account_id:
               taken: 已经被加入到列表了
-          must_be_following: 需要是你关注的账号
+          must_be_following: 必须是已关注的账号
         status:
           attributes:
             reblog:
@@ -55,6 +55,8 @@ zh-CN:
               too_soon: 日期太近，必须晚于 %{date}
         user:
           attributes:
+            date_of_birth:
+              below_limit: 低于年龄限制
             email:
               blocked: 使用了被封禁的电子邮件提供商
               unreachable: 似乎不存在
