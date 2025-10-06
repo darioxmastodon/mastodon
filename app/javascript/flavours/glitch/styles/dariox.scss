@@ -1,10 +1,10 @@
 @use 'sass:math';
-@import 'dariox/vars.scss';
-@import 'dariox/linernotes_dark.scss';
-@import 'dariox/vars.scss';
-@import 'dariox/account.scss';
-@import 'dariox/status.scss';
-@import 'dariox/compose.scss';
+@use 'dariox/vars.scss' as *;
+@use 'dariox/linernotes_dark.scss';
+// @use 'dariox/vars.scss';
+@use 'dariox/account.scss' as *;
+@use 'dariox/status.scss' as *;
+@use 'dariox/compose.scss' as *;
 
 body.app-body {
     background-color: $bg;

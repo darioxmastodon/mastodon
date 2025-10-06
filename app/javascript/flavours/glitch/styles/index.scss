@@ -2,4 +2,4 @@
   update their implementation, as the previous `index.scss` has been renamed
   to `application.scss`. */
 
-@import 'application';
+@use 'application';

@@ -1,4 +1,4 @@
-@import './vars.scss';
+@use './vars.scss' as *;
 .account {
     background: $bg !important;
     &__section-headline {

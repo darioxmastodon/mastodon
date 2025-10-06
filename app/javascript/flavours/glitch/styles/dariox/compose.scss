@@ -1,4 +1,4 @@
-@import './vars.scss';
+@use './vars.scss' as *;
 .autosuggest-textarea__textarea,
 .compose-form__autosuggest-wrapper,
 .compose-form .autosuggest-textarea label .autosuggest-textarea__textarea {
