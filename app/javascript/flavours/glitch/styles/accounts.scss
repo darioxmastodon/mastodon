@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use 'variables' as *;
 @use 'functions' as *;
 
@@ -69,7 +70,7 @@
       margin-inline-start: 15px;
       text-align: start;
 
-      i[data-hidden] {
+      svg[data-hidden] {
         display: none;
       }
 
@@ -137,7 +138,7 @@
 
   .newer {
     float: right;
-    padding-inline-start: 0;
+    padding-inline-end: 0;
   }
 
   .disabled {
@@ -161,7 +162,7 @@
 
 .nothing-here {
   background: $ui-base-color;
-  box-shadow: 0 0 15px rgba($base-shadow-color, 0.2);
+  box-shadow: 0 0 15px color.change($base-shadow-color, $alpha: 0.2);
   color: $darker-text-color;
   font-size: 14px;
   font-weight: 500;
@@ -203,10 +204,11 @@
 }
 
 .information-badge,
+.simple_form .overridden,
 .simple_form .recommended,
 .simple_form .not_recommended {
-  background-color: rgba($ui-secondary-color, 0.1);
-  border: 1px solid rgba($ui-secondary-color, 0.5);
+  background-color: color.change($ui-secondary-color, $alpha: 0.1);
+  border: 1px solid color.change($ui-secondary-color, $alpha: 0.5);
 }
 
 .account-role {
@@ -239,8 +241,9 @@
 
 .information-badge {
   &.superapp {
-    background-color: rgba($success-green, 0.1);
-    border-color: rgba($success-green, 0.5);
+    color: $success-green;
+    background-color: color.change($success-green, $alpha: 0.1);
+    border-color: color.change($success-green, $alpha: 0.5);
   }
 }
 
@@ -307,8 +310,8 @@
   }
 
   .verified {
-    border: 1px solid rgba($valid-value-color, 0.5);
-    background: rgba($valid-value-color, 0.25);
+    border: 1px solid color.change($valid-value-color, $alpha: 0.5);
+    background: color.change($valid-value-color, $alpha: 0.25);
 
     a {
       color: $valid-value-color;

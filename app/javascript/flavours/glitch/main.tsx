@@ -2,10 +2,10 @@ import { createRoot } from 'react-dom/client';
 
 import { Globals } from '@react-spring/web';
 
+import * as perf from '@/flavours/glitch/utils/performance';
 import { setupBrowserNotifications } from 'flavours/glitch/actions/notifications';
 import Mastodon from 'flavours/glitch/containers/mastodon';
 import { me, reduceMotion } from 'flavours/glitch/initial_state';
-import * as perf from 'flavours/glitch/performance';
 import ready from 'flavours/glitch/ready';
 import { store } from 'flavours/glitch/store';
 
@@ -28,6 +28,9 @@ function main() {
         skipAnimation: true,
       });
     }
+
+    const { initializeEmoji } = await import('./features/emoji/index');
+    initializeEmoji();
 
     const root = createRoot(mountNode);
     root.render(<Mastodon {...props} />);

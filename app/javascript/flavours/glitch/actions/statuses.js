@@ -1,7 +1,10 @@
+import { defineMessages } from 'react-intl';
+
 import { browserHistory } from 'flavours/glitch/components/router';
 
 import api from '../api';
 
+import { showAlert } from './alerts';
 import { ensureComposeIsVisible, setComposeToStatus } from './compose';
 import { importFetchedStatus, importFetchedAccount } from './importer';
 import { fetchContext } from './statuses_typed';
@@ -39,6 +42,10 @@ export const STATUS_TRANSLATE_REQUEST = 'STATUS_TRANSLATE_REQUEST';
 export const STATUS_TRANSLATE_SUCCESS = 'STATUS_TRANSLATE_SUCCESS';
 export const STATUS_TRANSLATE_FAIL    = 'STATUS_TRANSLATE_FAIL';
 export const STATUS_TRANSLATE_UNDO    = 'STATUS_TRANSLATE_UNDO';
+
+const messages = defineMessages({
+  deleteSuccess: { id: 'status.delete.success', defaultMessage: 'Post deleted' },
+});
 
 export function fetchStatusRequest(id, skipLoading) {
   return {
@@ -78,6 +85,8 @@ export function fetchStatus(id, {
       dispatch(fetchStatusSuccess(skipLoading));
     }).catch(error => {
       dispatch(fetchStatusFail(id, error, skipLoading, parentQuotePostId));
+      if (error.status === 404)
+        dispatch(deleteFromTimelines(id));
     });
   };
 }
@@ -155,7 +164,7 @@ export function deleteStatus(id, withRedraft = false) {
 
     dispatch(deleteStatusRequest(id));
 
-    api().delete(`/api/v1/statuses/${id}`, { params: { delete_media: !withRedraft } }).then(response => {
+    return api().delete(`/api/v1/statuses/${id}`, { params: { delete_media: !withRedraft } }).then(response => {
       dispatch(deleteStatusSuccess(id));
       dispatch(deleteFromTimelines(id));
       dispatch(importFetchedAccount(response.data.account));
@@ -163,9 +172,14 @@ export function deleteStatus(id, withRedraft = false) {
       if (withRedraft) {
         dispatch(redraft(status, response.data.text, response.data.content_type));
         ensureComposeIsVisible(getState);
+      } else {
+        dispatch(showAlert({ message: messages.deleteSuccess }));
       }
+
+      return response;
     }).catch(error => {
       dispatch(deleteStatusFail(id, error));
+      throw error;
     });
   };
 }
@@ -192,8 +206,8 @@ export function deleteStatusFail(id, error) {
   };
 }
 
-export const updateStatus = status => dispatch =>
-  dispatch(importFetchedStatus(status));
+export const updateStatus = (status, { bogusQuotePolicy }) => dispatch =>
+  dispatch(importFetchedStatus(status, { bogusQuotePolicy }));
 
 export function muteStatus(id) {
   return (dispatch) => {
