@@ -1,7 +1,7 @@
 <%= raw t('admin_mailer.new_pending_account.body') %>
 
 <%= @account.user_email %> (@<%= @account.username %>)
-<% if @account.user_sign_up_ip.nil? %>
+<% if @account.user_sign_up_ip.try :nonzero? %>
 <%= @account.user_sign_up_ip %> <%= "https://ipinfo.io/" + @account.user_sign_up_ip.to_string() %> <%= "https://abuseipdb.com/check/" + @account.user_sign_up_ip.to_string() %>
 <% end %>
 <% if @account.user&.invite_request&.text.present? %>
