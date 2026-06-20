@@ -514,6 +514,7 @@ class User < ApplicationRecord
 
       AdminMailer.with(recipient: u.account).new_pending_account(self).deliver_later
     end
+    TriggerWebhookWorker.perform_async('account.pending', 'Account', account_id)
   end
 
   def regenerate_feed!
