@@ -18,15 +18,17 @@ export interface PollOption extends ApiPollOptionJSON {
 
 export function createPollOptionTranslationFromServerJSON(translation: {
   title: string;
-}) {
+}): PollOptionTranslation {
   return {
     ...translation,
     titleHtml: escapeTextContentForBrowser(translation.title),
-  } as PollOptionTranslation;
+  };
 }
 
-export interface Poll
-  extends Omit<ApiPollJSON, 'emojis' | 'options' | 'own_votes'> {
+export interface Poll extends Omit<
+  ApiPollJSON,
+  'emojis' | 'options' | 'own_votes'
+> {
   emojis: CustomEmoji[];
   options: PollOption[];
   own_votes?: number[];

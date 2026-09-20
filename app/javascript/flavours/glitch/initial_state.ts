@@ -1,3 +1,4 @@
+import type { ApiAnnualReportState } from './api/annual_report';
 import type { ApiAccountJSON } from './api_types/accounts';
 
 type InitialStateLanguage = [code: string, name: string, localName: string];
@@ -49,15 +50,17 @@ interface InitialStateMeta {
   status_page_url: string;
   terms_of_service_enabled: boolean;
   emoji_style?: string;
+  wrapstodon?: InitialStateWrapstodon | null;
   default_content_type: string;
 }
 
-interface Role {
+interface IntialStateRole {
   id: string;
   name: string;
   permissions: string;
   color: string;
   highlighted: boolean;
+  collection_limit: number;
 }
 
 interface PollLimits {
@@ -67,12 +70,27 @@ interface PollLimits {
   max_expiration: number;
 }
 
+interface InitialStateWrapstodon {
+  year: number;
+  state: ApiAnnualReportState;
+}
+
+interface InitialStateCompose {
+  text: string;
+  default_privacy?: string;
+  default_sensitive?: boolean;
+  default_language?: string;
+  default_quote_policy?: string;
+  me?: string;
+}
+
 export interface InitialState {
   accounts: Record<string, ApiAccountJSON>;
   languages: InitialStateLanguage[];
+  compose: InitialStateCompose;
   critical_updates_pending?: boolean;
   meta: InitialStateMeta;
-  role?: Role;
+  role?: IntialStateRole;
   features: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   local_settings: any;
@@ -155,6 +173,7 @@ export const criticalUpdatesPending = initialState?.critical_updates_pending;
 export const statusPageUrl = getMeta('status_page_url');
 export const sso_redirect = getMeta('sso_redirect');
 export const termsOfServiceEnabled = getMeta('terms_of_service_enabled');
+export const wrapstodon = getMeta('wrapstodon');
 
 const displayNames =
   // Intl.DisplayNames can be undefined in old browsers
@@ -172,7 +191,7 @@ export const languages = initialState?.languages.map((lang) => {
     lang[0],
     displayNames?.of(lang[0].replace('zh-YUE', 'yue')) ?? lang[1],
     lang[2],
-  ];
+  ] as InitialStateLanguage;
 });
 
 // Glitch-soc-specific settings

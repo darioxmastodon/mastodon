@@ -16,7 +16,6 @@ class FanOutOnWriteService < BaseService
 
     return if @status.proper.account.suspended?
 
-    check_race_condition!
     warm_payload_cache!
 
     fan_out_to_local_recipients!
@@ -25,18 +24,6 @@ class FanOutOnWriteService < BaseService
   end
 
   private
-
-  def check_race_condition!
-    # I don't know why but at some point we had an issue where
-    # this service was being executed with status objects
-    # that had a null visibility - which should not be possible
-    # since the column in the database is not nullable.
-    #
-    # This check re-queues the service to be run at a later time
-    # with the full object, if something like it occurs
-
-    raise Mastodon::RaceConditionError if @status.visibility.nil?
-  end
 
   def fan_out_to_local_recipients!
     deliver_to_self!
@@ -81,9 +68,11 @@ class FanOutOnWriteService < BaseService
   end
 
   def notify_mentioned_accounts!
-    @status.active_mentions.where.not(id: @options[:silenced_account_ids] || []).joins(:account).merge(Account.local).select(:id, :account_id).reorder(nil).find_in_batches do |mentions|
+    @status.active_mentions.joins(:account).merge(Account.local).select(:id, :account_id).reorder(nil).find_in_batches do |mentions|
       LocalNotificationWorker.push_bulk(mentions) do |mention|
-        [mention.account_id, mention.id, 'Mention', 'mention']
+        options = { 'silenced' => true } if @options[:silenced_account_ids]&.include?(mention.account_id)
+
+        [mention.account_id, mention.id, 'Mention', 'mention', options].compact
       end
 
       next unless update?
@@ -177,10 +166,10 @@ class FanOutOnWriteService < BaseService
   end
 
   def anonymous_payload
-    @anonymous_payload ||= Oj.dump(
+    @anonymous_payload ||= JSON.generate({
       event: update? ? :'status.update' : :update,
-      payload: rendered_status
-    )
+      payload: rendered_status,
+    }.as_json)
   end
 
   def rendered_status

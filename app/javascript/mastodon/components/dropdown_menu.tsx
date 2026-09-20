@@ -13,13 +13,6 @@ import { Link } from 'react-router-dom';
 
 import type { Map as ImmutableMap } from 'immutable';
 
-import Overlay from 'react-overlays/Overlay';
-import type {
-  OffsetValue,
-  UsePopperOptions,
-  Placement,
-} from 'react-overlays/esm/usePopper';
-
 import { fetchRelationships } from 'mastodon/actions/accounts';
 import {
   openDropdownMenu,
@@ -40,6 +33,8 @@ import { useAppDispatch, useAppSelector } from 'mastodon/store';
 import { Icon } from './icon';
 import type { IconProp } from './icon';
 import { IconButton } from './icon_button';
+import type { PopoverProps } from './popover';
+import { Popover } from './popover';
 
 let id = 0;
 
@@ -71,10 +66,15 @@ export const DropdownMenuItemContent: React.FC<{ item: MenuItem }> = ({
     return null;
   }
 
-  const { text, description, icon } = item;
+  const { text, description, icon, iconId } = item;
   return (
     <>
-      {icon && <Icon icon={icon} id={`${text}-icon`} />}
+      {icon && (
+        <Icon
+          icon={icon}
+          id={iconId ?? text.toLowerCase().replaceAll(/[^a-z]+/g, '-')}
+        />
+      )}
       <span className='dropdown-menu__item-content'>
         {text}
         {Boolean(description) && (
@@ -216,6 +216,7 @@ export const DropdownMenu = <Item = MenuItem,>({
           onClick={handleItemClick}
           data-index={i}
           aria-disabled={disabled}
+          type='button'
         >
           <DropdownMenuItemContent item={option} />
         </button>
@@ -290,13 +291,14 @@ interface DropdownProps<Item extends object | null = MenuItem> {
   children?: React.ReactElement;
   icon?: string;
   iconComponent?: IconProp;
+  iconClassName?: string;
   items?: Item[];
   loading?: boolean;
   title?: string;
   disabled?: boolean;
   scrollable?: boolean;
-  placement?: Placement;
-  offset?: OffsetValue;
+  placement?: PopoverProps['placement'];
+  offset?: PopoverProps['offset'];
   /**
    * Prevent the `ScrollableList` with this scrollKey
    * from being scrolled while the dropdown is open
@@ -305,30 +307,31 @@ interface DropdownProps<Item extends object | null = MenuItem> {
   status?: ImmutableMap<string, unknown>;
   needsStatusRefresh?: boolean;
   forceDropdown?: boolean;
+  className?: string;
   renderItem?: RenderItemFn<Item>;
   renderHeader?: RenderHeaderFn<Item>;
   onOpen?: // Must use a union type for the full function as a union with void is not allowed.
-  | ((event: React.MouseEvent | React.KeyboardEvent) => void)
+    | ((event: React.MouseEvent | React.KeyboardEvent) => void)
     | ((event: React.MouseEvent | React.KeyboardEvent) => boolean);
   onItemClick?: ItemClickFn<Item>;
 }
-
-const popperConfig = { strategy: 'fixed' } as UsePopperOptions;
 
 export const Dropdown = <Item extends object | null = MenuItem>({
   children,
   icon,
   iconComponent,
+  iconClassName,
   items,
   loading,
   title = 'Menu',
   disabled,
   scrollable,
   placement = 'bottom',
-  offset = [5, 5],
+  offset = 5,
   status,
   needsStatusRefresh,
   forceDropdown = false,
+  className,
   renderItem,
   renderHeader,
   onOpen,
@@ -342,7 +345,9 @@ export const Dropdown = <Item extends object | null = MenuItem>({
   );
   const [currentId] = useState(id++);
   const open = currentId === openDropdownId;
-  const buttonRef = useRef<HTMLButtonElement | null>(null);
+  const [buttonElement, setButtonElement] = useState<HTMLButtonElement | null>(
+    null,
+  );
   const menuId = useId();
   const prefetchAccountId = status
     ? status.getIn(['account', 'id'])
@@ -350,8 +355,8 @@ export const Dropdown = <Item extends object | null = MenuItem>({
   const statusId = status?.get('id') as string | undefined;
 
   const handleClose = useCallback(() => {
-    if (buttonRef.current) {
-      buttonRef.current.focus({ preventScroll: true });
+    if (buttonElement) {
+      buttonElement.focus({ preventScroll: true });
     }
 
     dispatch(
@@ -362,7 +367,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
     );
 
     dispatch(closeDropdownMenu({ id: currentId }));
-  }, [dispatch, currentId]);
+  }, [buttonElement, dispatch, currentId]);
 
   const handleItemClick = useCallback(
     (e: React.MouseEvent) => {
@@ -428,6 +433,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
               modalProps: {
                 actions: items,
                 onClick: handleItemClick,
+                className,
               },
             }),
           );
@@ -456,6 +462,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
       handleClose,
       statusId,
       needsStatusRefresh,
+      className,
     ],
   );
 
@@ -477,10 +484,12 @@ export const Dropdown = <Item extends object | null = MenuItem>({
     onBlur: unsetIsKeypress,
     'aria-expanded': open,
     'aria-controls': menuId,
-    ref: buttonRef,
+    ref: setButtonElement,
   };
 
   if (children) {
+    // We're just assigning the ref to an element so this is safe
+    // eslint-disable-next-line react-hooks/refs
     button = cloneElement(Children.only(children), buttonProps);
   } else if (icon && iconComponent) {
     button = (
@@ -489,6 +498,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
         iconComponent={iconComponent}
         title={title}
         active={open}
+        className={iconClassName}
         {...buttonProps}
       />
     );
@@ -500,22 +510,16 @@ export const Dropdown = <Item extends object | null = MenuItem>({
     <>
       {button}
 
-      <Overlay
-        show={open}
+      <Popover
+        isOpen={open}
+        onClose={handleClose}
         offset={offset}
         placement={placement}
-        flip
-        target={buttonRef}
-        popperConfig={popperConfig}
+        reference={buttonElement}
       >
-        {({ props, arrowProps, placement }) => (
-          <div {...props} id={menuId}>
+        {({ props, placement }) => (
+          <div {...props} className={className} id={menuId}>
             <div className={`dropdown-animation dropdown-menu ${placement}`}>
-              <div
-                className={`dropdown-menu__arrow ${placement}`}
-                {...arrowProps}
-              />
-
               <DropdownMenu
                 items={items}
                 loading={loading}
@@ -529,7 +533,7 @@ export const Dropdown = <Item extends object | null = MenuItem>({
             </div>
           </div>
         )}
-      </Overlay>
+      </Popover>
     </>
   );
 };

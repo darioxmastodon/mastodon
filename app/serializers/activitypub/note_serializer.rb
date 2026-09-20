@@ -33,7 +33,7 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
 
   attribute :voters_count, if: :poll_and_voters_count?
 
-  attribute :quote, if: :quote?
+  attribute :quote, if: :nonlegacy_quote?
   attribute :quote, key: :_misskey_quote, if: :serializable_quote?
   attribute :quote, key: :quote_uri, if: :serializable_quote?
   attribute :quote_authorization, if: :quote_authorization?
@@ -147,11 +147,11 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
   end
 
   def virtual_attachments
-    object.ordered_media_attachments
+    object.ordered_media_attachments + [object.preview_card].compact
   end
 
   def virtual_tags
-    object.active_mentions.to_a.sort_by(&:id) + object.tags + object.emojis
+    object.active_mentions.to_a.sort_by(&:id) + object.tags + object.emojis + object.tagged_objects.filter_map(&:object)
   end
 
   def atom_uri
@@ -230,6 +230,10 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
     object.quote&.quoted_status&.present?
   end
 
+  def nonlegacy_quote?
+    object.quote.present? && !object.quote.legacy?
+  end
+
   def quote_authorization?
     object.quote.present? && ActivityPub::TagManager.instance.approval_uri_for(object.quote).present?
   end
@@ -247,10 +251,10 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
     approved_uris = []
 
     # On outgoing posts, only automatic approval is supported
-    policy = object.quote_approval_policy >> 16
-    approved_uris << ActivityPub::TagManager::COLLECTIONS[:public] if policy.anybits?(Status::QUOTE_APPROVAL_POLICY_FLAGS[:public])
-    approved_uris << ActivityPub::TagManager.instance.followers_uri_for(object.account) if policy.anybits?(Status::QUOTE_APPROVAL_POLICY_FLAGS[:followers])
-    approved_uris << ActivityPub::TagManager.instance.following_uri_for(object.account) if policy.anybits?(Status::QUOTE_APPROVAL_POLICY_FLAGS[:following])
+    policy = object.quote_interaction_policy.automatic
+    approved_uris << ActivityPub::TagManager::COLLECTIONS[:public] if policy.public?
+    approved_uris << ActivityPub::TagManager.instance.followers_uri_for(object.account) if policy.followers?
+    approved_uris << ActivityPub::TagManager.instance.following_uri_for(object.account) if policy.following?
     approved_uris << ActivityPub::TagManager.instance.uri_for(object.account) if approved_uris.empty?
 
     {
@@ -258,6 +262,18 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
         automaticApproval: approved_uris,
       },
     }
+  end
+
+  class PreviewCardSerializer < ActivityPub::Serializer
+    attributes :type, :href
+
+    def type
+      'Link'
+    end
+
+    def href
+      object.original_url.presence || object.url
+    end
   end
 
   class MediaAttachmentSerializer < ActivityPub::Serializer
@@ -269,6 +285,7 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
     attribute :focal_point, if: :focal_point?
     attribute :width, if: :width?
     attribute :height, if: :height?
+    attribute :duration, if: :duration?
 
     has_one :icon, serializer: ActivityPub::ImageSerializer, if: :thumbnail?
 
@@ -312,12 +329,20 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
       object.file.meta&.dig('original', 'height').present?
     end
 
+    def duration?
+      object.file.meta&.dig('original', 'duration').present?
+    end
+
     def width
       object.file.meta.dig('original', 'width')
     end
 
     def height
       object.file.meta.dig('original', 'height')
+    end
+
+    def duration
+      object.file.meta.dig('original', 'duration').seconds.iso8601
     end
   end
 
@@ -357,8 +382,9 @@ class ActivityPub::NoteSerializer < ActivityPub::Serializer
     end
   end
 
-  class CustomEmojiSerializer < ActivityPub::EmojiSerializer
-  end
+  class CustomEmojiSerializer < ActivityPub::EmojiSerializer; end
+
+  class CollectionSerializer < ActivityPub::FeaturedCollectionSerializer; end
 
   class OptionSerializer < ActivityPub::Serializer
     class RepliesSerializer < ActivityPub::Serializer

@@ -1,20 +1,19 @@
-import { useEffect, useRef, useState, useId } from 'react';
+import { useEffect, useState, useId } from 'react';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import classNames from 'classnames';
 
-import Overlay from 'react-overlays/Overlay';
-
+import { useDismissible } from '@/mastodon/hooks/useDismissible';
 import MoreHorizIcon from '@/material-icons/400-24px/more_horiz.svg?react';
 
 import { Button } from '../button';
-import { useDismissableBannerState } from '../dismissable_banner';
 import { Icon } from '../icon';
+import { Popover } from '../popover';
 
 import classes from './remove_quote_hint.module.css';
 
-const DISMISSABLE_BANNER_ID = 'notifications/remove_quote_hint';
+const DISMISSIBLE_BANNER_ID = 'notifications/remove_quote_hint';
 
 /**
  * We don't want to show this hint in the UI more than once,
@@ -28,12 +27,12 @@ export const RemoveQuoteHint: React.FC<{
   className?: string;
   children: (dismiss: () => void) => React.ReactNode;
 }> = ({ canShowHint, className, children }) => {
-  const anchorRef = useRef<HTMLDivElement>(null);
+  const [anchorElement, setAnchorElement] = useState<HTMLDivElement | null>(
+    null,
+  );
   const intl = useIntl();
 
-  const { wasDismissed, dismiss } = useDismissableBannerState({
-    id: DISMISSABLE_BANNER_ID,
-  });
+  const { wasDismissed, dismiss } = useDismissible(DISMISSIBLE_BANNER_ID);
 
   const shouldShowHint = !wasDismissed && canShowHint;
 
@@ -46,6 +45,7 @@ export const RemoveQuoteHint: React.FC<{
 
     if (!firstHintId) {
       firstHintId = uniqueId;
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsOnlyHint(true);
     }
 
@@ -58,16 +58,16 @@ export const RemoveQuoteHint: React.FC<{
   }, [shouldShowHint, uniqueId]);
 
   return (
-    <div className={className} ref={anchorRef}>
+    <div className={className} ref={setAnchorElement}>
       {children(dismiss)}
       {shouldShowHint && isOnlyHint && (
-        <Overlay
-          show
-          flip
-          offset={[12, 10]}
+        <Popover
+          isOpen
+          offset={{ mainAxis: 10, crossAxis: 12 }}
           placement='bottom-end'
-          target={anchorRef.current}
-          container={anchorRef.current}
+          reference={anchorElement}
+          container={anchorElement}
+          onClose={dismiss}
         >
           {({ props, placement }) => (
             <div
@@ -114,7 +114,7 @@ export const RemoveQuoteHint: React.FC<{
               </FormattedMessage>
             </div>
           )}
-        </Overlay>
+        </Popover>
       )}
     </div>
   );

@@ -36,6 +36,27 @@ RSpec.describe FollowingAccountsController do
           expect(response).to have_http_status(403)
         end
       end
+
+      context 'when account is permanently deleted' do
+        before do
+          alice.mark_deleted!
+          alice.deletion_request.destroy
+        end
+
+        it 'returns http gone' do
+          expect(response).to have_http_status(410)
+        end
+      end
+
+      context 'when account is pending deletion' do
+        before do
+          alice.mark_deleted!
+        end
+
+        it 'returns http forbidden' do
+          expect(response).to have_http_status(403)
+        end
+      end
     end
 
     context 'when format is json' do
@@ -57,6 +78,37 @@ RSpec.describe FollowingAccountsController do
             )
         end
 
+        context 'when account hides their network' do
+          before { alice.update(hide_collections: true) }
+
+          it 'returns forbidden response' do
+            expect(response)
+              .to have_http_status(403)
+            expect(response.parsed_body)
+              .to include(error: /forbidden/i)
+          end
+        end
+
+        context 'when request is signed in and user blocks an account' do
+          let(:account) { Fabricate :account }
+
+          before do
+            Fabricate :block, account:, target_account: followee_bob
+            sign_in(account.user)
+          end
+
+          it 'returns followers without blocked' do
+            expect(response)
+              .to have_http_status(200)
+            expect(response.parsed_body)
+              .to include(
+                orderedItems: contain_exactly(
+                  include(follow_of_chris.target_account.id.to_s)
+                )
+              )
+          end
+        end
+
         context 'when account is permanently suspended' do
           before do
             alice.suspend!
@@ -71,6 +123,27 @@ RSpec.describe FollowingAccountsController do
         context 'when account is temporarily suspended' do
           before do
             alice.suspend!
+          end
+
+          it 'returns http forbidden' do
+            expect(response).to have_http_status(403)
+          end
+        end
+
+        context 'when account is permanently deleted' do
+          before do
+            alice.mark_deleted!
+            alice.deletion_request.destroy
+          end
+
+          it 'returns http gone' do
+            expect(response).to have_http_status(410)
+          end
+        end
+
+        context 'when account is pending deletion' do
+          before do
+            alice.mark_deleted!
           end
 
           it 'returns http forbidden' do
@@ -124,6 +197,27 @@ RSpec.describe FollowingAccountsController do
         context 'when account is temporarily suspended' do
           before do
             alice.suspend!
+          end
+
+          it 'returns http forbidden' do
+            expect(response).to have_http_status(403)
+          end
+        end
+
+        context 'when account is permanently deleted' do
+          before do
+            alice.mark_deleted!
+            alice.deletion_request.destroy
+          end
+
+          it 'returns http gone' do
+            expect(response).to have_http_status(410)
+          end
+        end
+
+        context 'when account is pending deletion' do
+          before do
+            alice.mark_deleted!
           end
 
           it 'returns http forbidden' do

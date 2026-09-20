@@ -10,9 +10,8 @@ import {
   insertEmojiCompose,
   uploadCompose,
 } from 'flavours/glitch/actions/compose';
-import { pasteLinkCompose } from 'flavours/glitch/actions/compose_typed';
+import { pasteLinkCompose, PRIVATE_QUOTE_MODAL_ID } from 'flavours/glitch/actions/compose_typed';
 import { openModal } from 'flavours/glitch/actions/modal';
-import { PRIVATE_QUOTE_MODAL_ID } from 'flavours/glitch/features/ui/components/confirmation_modals/private_quote_notify';
 import { me } from 'flavours/glitch/initial_state';
 import { privacyPreference } from 'flavours/glitch/utils/privacy_preference';
 
@@ -35,6 +34,23 @@ const sideArmPrivacy = state => {
     break;
   }
   return sideArmPrivacy || sideArmBasePrivacy;
+};
+
+const processPasteOrDrop = (transfer, e, dispatch) => {
+  if (transfer && transfer.files.length === 1) {
+    dispatch(uploadCompose(transfer.files));
+    e.preventDefault();
+  } else if (transfer && transfer.files.length === 0) {
+    const data = transfer.getData('text/plain');
+    if (!data.match(urlLikeRegex)) return;
+
+    try {
+      const url = new URL(data);
+      dispatch(pasteLinkCompose({ url }));
+    } catch {
+      return;
+    }
+  }
 };
 
 const mapStateToProps = state => ({
@@ -63,7 +79,7 @@ const mapStateToProps = state => ({
   lang: state.getIn(['compose', 'language']),
   sideArm: sideArmPrivacy(state),
   media: state.getIn(['compose', 'media_attachments']),
-  maxChars: state.getIn(['server', 'server', 'configuration', 'statuses', 'max_characters'], 500),
+  maxChars: state.getIn(['server', 'server', 'item', 'configuration', 'statuses', 'max_characters'], 500),
 });
 
 const mapDispatchToProps = (dispatch, props) => ({
@@ -72,7 +88,7 @@ const mapDispatchToProps = (dispatch, props) => ({
     dispatch(changeCompose(text));
   },
 
-  onSubmit ({ missingAltText, quoteToPrivate, overridePrivacy = null }) {
+  onSubmit ({ missingAltText, quoteToPrivate, overridePrivacy }) {
     if (missingAltText) {
       dispatch(openModal({
         modalType: 'CONFIRM_MISSING_ALT_TEXT',
@@ -84,11 +100,11 @@ const mapDispatchToProps = (dispatch, props) => ({
         modalProps: {},
       }));
     } else {
-      dispatch(submitCompose(overridePrivacy, (status) => {
+      dispatch(submitCompose((status) => {
         if (props.redirectOnSuccess) {
           window.location.assign(status.url);
         }
-      }));
+      }, overridePrivacy));
     }
   },
 
@@ -109,20 +125,11 @@ const mapDispatchToProps = (dispatch, props) => ({
   },
 
   onPaste (e) {
-    if (e.clipboardData && e.clipboardData.files.length === 1) {
-      dispatch(uploadCompose(e.clipboardData.files));
-      e.preventDefault();
-    } else if (e.clipboardData && e.clipboardData.files.length === 0) {
-      const data = e.clipboardData.getData('text/plain');
-      if (!data.match(urlLikeRegex)) return;
+    processPasteOrDrop(e.clipboardData, e, dispatch);
+  },
 
-      try {
-        const url = new URL(data);
-        dispatch(pasteLinkCompose({ url }));
-      } catch {
-        return;
-      }
-    }
+  onDrop (e) {
+    processPasteOrDrop(e.dataTransfer, e, dispatch);
   },
 
   onPickEmoji (position, data, needsSpace) {

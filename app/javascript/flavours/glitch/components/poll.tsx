@@ -15,7 +15,6 @@ import { fetchPoll, vote } from 'flavours/glitch/actions/polls';
 import { Icon } from 'flavours/glitch/components/icon';
 import { useIdentity } from 'flavours/glitch/identity_context';
 import type * as Model from 'flavours/glitch/models/poll';
-import type { Status } from 'flavours/glitch/models/status';
 import { useAppDispatch, useAppSelector } from 'flavours/glitch/store';
 
 import { RelativeTimestamp } from './relative_timestamp';
@@ -35,14 +34,23 @@ const messages = defineMessages({
   },
 });
 
+const isPollExpired = (expiresAt: Model.Poll['expires_at']) =>
+  expiresAt !== null && new Date(expiresAt).getTime() < Date.now();
+
 interface PollProps {
   pollId: string;
-  status: Status;
+  accountId: string;
+  statusUrl: string;
   lang?: string;
   disabled?: boolean;
 }
 
-export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
+export const Poll: React.FC<PollProps> = ({
+  pollId,
+  disabled,
+  accountId,
+  statusUrl,
+}) => {
   // Third party hooks
   const poll = useAppSelector((state) => state.polls[pollId]);
   const identity = useIdentity();
@@ -58,11 +66,7 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
     if (!poll) {
       return false;
     }
-    const expiresAt = poll.expires_at;
-    return (
-      poll.expired ||
-      (expiresAt !== null && new Date(expiresAt).getTime() < Date.now())
-    );
+    return poll.expired || isPollExpired(poll.expires_at);
   }, [poll]);
   const timeRemaining = useMemo(() => {
     if (!poll?.expires_at) {
@@ -71,7 +75,7 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
     if (expired) {
       return intl.formatMessage(messages.closed);
     }
-    return <RelativeTimestamp timestamp={poll.expires_at} futureDate />;
+    return <RelativeTimestamp hasFuture timestamp={poll.expires_at} />;
   }, [expired, intl, poll]);
   const votesCount = useMemo(() => {
     if (!poll) {
@@ -111,13 +115,22 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
         openModal({
           modalType: 'INTERACTION',
           modalProps: {
-            accountId: status.getIn(['account', 'id']),
-            url: status.get('uri'),
+            accountId,
+            intent: 'vote',
+            url: statusUrl,
           },
         }),
       );
     }
-  }, [voteDisabled, dispatch, identity, pollId, selected, status]);
+  }, [
+    voteDisabled,
+    dispatch,
+    identity,
+    pollId,
+    selected,
+    accountId,
+    statusUrl,
+  ]);
 
   const handleReveal = useCallback(() => {
     setRevealed(true);
@@ -174,13 +187,14 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
             className='button button-secondary'
             disabled={voteDisabled}
             onClick={handleVote}
+            type='button'
           >
             <FormattedMessage id='poll.vote' defaultMessage='Vote' />
           </button>
         )}
         {!showResults && (
           <>
-            <button className='poll__link' onClick={handleReveal}>
+            <button className='poll__link' onClick={handleReveal} type='button'>
               <FormattedMessage id='poll.reveal' defaultMessage='See results' />
             </button>{' '}
             ·{' '}
@@ -188,7 +202,11 @@ export const Poll: React.FC<PollProps> = ({ pollId, disabled, status }) => {
         )}
         {showResults && !disabled && (
           <>
-            <button className='poll__link' onClick={handleRefresh}>
+            <button
+              className='poll__link'
+              onClick={handleRefresh}
+              type='button'
+            >
               <FormattedMessage id='poll.refresh' defaultMessage='Refresh' />
             </button>{' '}
             ·{' '}

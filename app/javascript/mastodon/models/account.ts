@@ -11,10 +11,10 @@ import type {
 import { unescapeHTML } from 'mastodon/utils/html';
 
 import { CustomEmojiFactory } from './custom_emoji';
-import type { CustomEmoji } from './custom_emoji';
+import type { CustomEmoji, CustomEmojiShape } from './custom_emoji';
 
 // AccountField
-interface AccountFieldShape extends Required<ApiAccountFieldJSON> {
+export interface AccountFieldShape extends Required<ApiAccountFieldJSON> {
   name_emojified: string;
   value_emojified: string;
   value_plain: string | null;
@@ -42,10 +42,9 @@ const AccountRoleFactory = ImmutableRecord<AccountRoleShape>({
 });
 
 // Account
-export interface AccountShape
-  extends Required<
-    Omit<ApiAccountJSON, 'emojis' | 'fields' | 'roles' | 'moved' | 'url'>
-  > {
+export interface AccountShape extends Required<
+  Omit<ApiAccountJSON, 'emojis' | 'fields' | 'roles' | 'moved' | 'url'>
+> {
   emojis: ImmutableList<CustomEmoji>;
   fields: ImmutableList<AccountField>;
   roles: ImmutableList<AccountRole>;
@@ -56,6 +55,14 @@ export interface AccountShape
   moved: string | null;
   url: string;
 }
+export type AccountShapeFull = Omit<
+  AccountShape,
+  'emojis' | 'fields' | 'roles'
+> & {
+  emojis: CustomEmojiShape[];
+  fields: AccountFieldShape[];
+  roles: AccountRoleShape[];
+};
 
 export type Account = RecordOf<AccountShape>;
 
@@ -63,6 +70,7 @@ export const accountDefaultValues: AccountShape = {
   acct: '',
   avatar: '',
   avatar_static: '',
+  avatar_description: '',
   bot: false,
   created_at: '',
   discoverable: false,
@@ -70,14 +78,23 @@ export const accountDefaultValues: AccountShape = {
   display_name: '',
   display_name_html: '',
   emojis: ImmutableList<CustomEmoji>(),
+  feature_approval: {
+    automatic: [],
+    manual: [],
+    current_user: 'missing',
+  },
   fields: ImmutableList<AccountField>(),
   group: false,
   header: '',
   header_static: '',
+  header_description: '',
   id: '',
   last_status_at: '',
   locked: false,
   noindex: false,
+  show_featured: true,
+  show_media: true,
+  show_media_replies: true,
   note: '',
   note_emojified: '',
   note_plain: 'string',
@@ -94,6 +111,8 @@ export const accountDefaultValues: AccountShape = {
   limited: false,
   moved: null,
   hide_collections: false,
+  email_subscriptions: false,
+  invalid_handle: false,
   // This comes from `ApiMutedAccountJSON`, but we should eventually
   // store that in a different object.
   mute_expires_at: null,

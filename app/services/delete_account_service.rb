@@ -10,6 +10,7 @@ class DeleteAccountService < BaseService
     aliases
     block_relationships
     blocked_by_relationships
+    collections
     conversation_mutes
     conversations
     custom_filters
@@ -27,6 +28,7 @@ class DeleteAccountService < BaseService
     scheduled_statuses
     status_pins
     tag_follows
+    generated_annual_reports
   ).freeze
 
   # The following associations have no important side-effects
@@ -52,6 +54,7 @@ class DeleteAccountService < BaseService
     scheduled_statuses
     status_pins
     tag_follows
+    generated_annual_reports
   ).freeze
 
   ASSOCIATIONS_ON_DESTROY = %w(
@@ -115,7 +118,7 @@ class DeleteAccountService < BaseService
     # we have to force it to unfollow them.
 
     ActivityPub::DeliveryWorker.push_bulk(Follow.where(account: @account)) do |follow|
-      [Oj.dump(serialize_payload(follow, ActivityPub::RejectFollowSerializer)), follow.target_account_id, @account.inbox_url]
+      [serialize_payload(follow, ActivityPub::RejectFollowSerializer).to_json, follow.target_account_id, @account.inbox_url]
     end
   end
 
@@ -127,7 +130,7 @@ class DeleteAccountService < BaseService
     # if the remote account gets un-suspended.
 
     ActivityPub::DeliveryWorker.push_bulk(Follow.where(target_account: @account)) do |follow|
-      [Oj.dump(serialize_payload(follow, ActivityPub::UndoFollowSerializer)), follow.account_id, @account.inbox_url]
+      [serialize_payload(follow, ActivityPub::UndoFollowSerializer).to_json, follow.account_id, @account.inbox_url]
     end
   end
 
@@ -193,7 +196,7 @@ class DeleteAccountService < BaseService
       ids = favourites.pluck(:status_id)
       StatusStat.where(status_id: ids).update_all('favourites_count = GREATEST(0, favourites_count - 1)')
       Chewy.strategy.current.update(StatusesIndex, ids) if Chewy.enabled?
-      Rails.cache.delete_multi(ids.map { |id| "statuses/#{id}" })
+      Rails.cache.delete_multi(ids.flat_map { |id| ["v3:statuses/#{id}", "statuses/show:v3:statuses/#{id}"] })
       favourites.delete_all
     end
   end
@@ -225,9 +228,14 @@ class DeleteAccountService < BaseService
 
     return unless keep_account_record?
 
+    if @options[:suspended_at]
+      @account.suspended_at      = @options[:suspended_at]
+      @account.suspension_origin = :local
+    else
+      @account.requested_deletion_at ||= Time.now.utc
+    end
+
     @account.silenced_at         = nil
-    @account.suspended_at        = @options[:suspended_at] || Time.now.utc
-    @account.suspension_origin   = :local
     @account.locked              = false
     @account.memorial            = false
     @account.discoverable        = false
@@ -286,7 +294,7 @@ class DeleteAccountService < BaseService
   end
 
   def delete_actor_json
-    @delete_actor_json ||= Oj.dump(serialize_payload(@account, ActivityPub::DeleteActorSerializer, signer: @account, always_sign: true))
+    @delete_actor_json ||= serialize_payload(@account, ActivityPub::DeleteActorSerializer, signer: @account, always_sign: true).to_json
   end
 
   def delivery_inboxes
