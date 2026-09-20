@@ -25,7 +25,6 @@ export const HoverCardController: React.FC = () => {
   const cardRef = useRef<HTMLDivElement>(null);
   const [setLeaveTimeout, cancelLeaveTimeout] = useTimeout();
   const [setEnterTimeout, cancelEnterTimeout, delayEnterTimeout] = useTimeout();
-  const [setMoveTimeout, cancelMoveTimeout] = useTimeout();
   const [setScrollTimeout] = useTimeout();
   const lastMouseMoveTime = useRef<number>(0);
 
@@ -205,8 +204,6 @@ export const HoverCardController: React.FC = () => {
     setOpen,
     setAccountId,
     setAnchor,
-    setMoveTimeout,
-    cancelMoveTimeout,
   ]);
 
   return (

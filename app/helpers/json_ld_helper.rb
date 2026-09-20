@@ -162,16 +162,6 @@ module JsonLdHelper
     end
   end
 
-  def unsupported_jsonld_features?(json)
-    if json.is_a?(Hash)
-      json.any? { |key, value| UNSUPPORTED_JSONLD_KEYWORDS.include?(key) || unsupported_jsonld_features?(value) }
-    elsif json.is_a?(Array)
-      json.any? { |value| unsupported_jsonld_features?(value) }
-    else
-      false
-    end
-  end
-
   # Patches a JSON-LD document to avoid compatibility issues on redistribution
   #
   # Since compacting a JSON-LD document against Mastodon's built-in vocabulary
