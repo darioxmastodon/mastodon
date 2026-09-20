@@ -30,10 +30,12 @@ Rails.application.config.content_security_policy do |p|
   p.child_src  :self, :blob, assets_host
   p.worker_src :self, :blob, assets_host
 
-  p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url
-  p.script_src  :self, assets_host, "'wasm-unsafe-eval'"
+  # START_KATE_CHANGES
+  p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url, "cloudflareinsights.com"
+  p.script_src  :self, assets_host, "'wasm-unsafe-eval'", "static.cloudflareinsights.com"
   p.frame_src   :self, :https
   p.style_src   :self, assets_host
+  # END_KATE_CHANGES
 
   next unless Rails.env.development?
 
@@ -45,13 +47,6 @@ Rails.application.config.content_security_policy do |p|
     p.script_src  :self, :unsafe_inline, :unsafe_eval, assets_host
     p.frame_src   :self, :https, :http
     p.style_src   :self, assets_host, :unsafe_inline
-  # START_KATE_CHANGES
-  else
-    p.connect_src :self, :data, :blob, *media_hosts, Rails.configuration.x.streaming_api_base_url, "cloudflareinsights.com"
-    p.script_src  :self, :unsafe_inline, :unsafe_eval, assets_host, "static.cloudflareinsights.com"
-    p.frame_src   :self, :https
-    p.style_src   :self, assets_host, :unsafe_inline
-  # END_KATE_CHANGES
   end
 end
 

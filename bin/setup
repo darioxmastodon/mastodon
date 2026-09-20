@@ -19,7 +19,7 @@ FileUtils.chdir APP_ROOT do
 
   puts "\n== Installing JS dependencies =="
   system! 'npm i -g corepack'
-  system! 'bin/yarn install --immutable'
+  system! 'bin/yarn install'
 
   puts "\n== Preparing database =="
   system! 'bin/rails db:prepare'
