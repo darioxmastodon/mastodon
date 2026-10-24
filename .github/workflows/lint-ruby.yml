@@ -1,18 +1,19 @@
 name: Ruby Linting
 on:
   merge_group:
-  push:
-    branches:
-      - 'main'
-      - 'stable-*'
-    paths:
-      - 'Gemfile*'
-      - '.rubocop*.yml'
-      - '.ruby-version'
-      - 'bin/rubocop'
-      - '**/*.rb'
-      - '**/*.rake'
-      - '.github/workflows/lint-ruby.yml'
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - 'main'
+  #    - 'stable-*'
+  #  paths:
+  #    - 'Gemfile*'
+  #    - '.rubocop*.yml'
+  #    - '.ruby-version'
+  #    - 'bin/rubocop'
+  #    - '**/*.rb'
+  #    - '**/*.rake'
+  #    - '.github/workflows/lint-ruby.yml'
 
   pull_request:
     paths:

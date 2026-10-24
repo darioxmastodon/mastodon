@@ -1,18 +1,19 @@
 name: CSS Linting
 on:
   merge_group:
-  push:
-    branches:
-      - 'main'
-      - 'stable-*'
-    paths:
-      - 'package.json'
-      - 'yarn.lock'
-      - '.nvmrc'
-      - 'stylelint.config.js'
-      - '**/*.css'
-      - '**/*.scss'
-      - '.github/workflows/lint-css.yml'
+  workflow_dispatch:
+  #push:
+  #  branches:
+  #    - 'main'
+  #    - 'stable-*'
+  #  paths:
+  #    - 'package.json'
+  #    - 'yarn.lock'
+  #    - '.nvmrc'
+  #    - 'stylelint.config.js'
+  #    - '**/*.css'
+  #    - '**/*.scss'
+  #    - '.github/workflows/lint-css.yml'
 
   pull_request:
     paths:

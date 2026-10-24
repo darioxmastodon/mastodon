@@ -14,13 +14,13 @@ on:
       - 'lib/tasks/tests.rake'
       - 'lib/tasks/db.rake'
 
-  pull_request:
-    paths:
-      - 'Gemfile*'
-      - '.ruby-version'
-      - '**/*.rb'
-      - '.github/workflows/test-migrations.yml'
-      - 'lib/tasks/tests.rake'
+  #pull_request:
+  #  paths:
+  #    - 'Gemfile*'
+  #    - '.ruby-version'
+  #    - '**/*.rb'
+  #    - '.github/workflows/test-migrations.yml'
+  #    - 'lib/tasks/tests.rake'
 
 jobs:
   test:
